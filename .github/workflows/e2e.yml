@@ -1,0 +1,332 @@
+name: AgriDirect E2E Tests
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  # ───────────────────────────────────────────────────────────────────────────
+  backend-tests:
+    name: ☕ Backend — Unit Tests
+    runs-on: ubuntu-latest
+    outputs:
+      total: ${{ steps.summarize.outputs.total }}
+      passed: ${{ steps.summarize.outputs.passed }}
+      failed: ${{ steps.summarize.outputs.failed }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: maven
+          cache-dependency-path: backend/pom.xml
+
+      - name: Run backend unit tests
+        working-directory: backend
+        run: chmod +x mvnw && ./mvnw -B test
+        continue-on-error: true
+
+      - name: Summarize results
+        id: summarize
+        if: always()
+        run: |
+          TOTAL=0; PASS=0; FAIL=0
+          for f in backend/target/surefire-reports/*.xml; do
+            [ -f "$f" ] || continue
+            T=$(grep -o 'tests="[0-9]*"' "$f" | head -1 | grep -o '[0-9]*')
+            F=$(grep -o 'failures="[0-9]*"' "$f" | head -1 | grep -o '[0-9]*')
+            E=$(grep -o 'errors="[0-9]*"' "$f" | head -1 | grep -o '[0-9]*')
+            T=${T:-0}; F=${F:-0}; E=${E:-0}
+            TOTAL=$((TOTAL+T)); FAIL=$((FAIL+F+E))
+          done
+          PASS=$((TOTAL-FAIL))
+          echo "total=$TOTAL" >> $GITHUB_OUTPUT
+          echo "passed=$PASS" >> $GITHUB_OUTPUT
+          echo "failed=$FAIL" >> $GITHUB_OUTPUT
+          mkdir -p artifacts
+          echo "{\"total\":$TOTAL,\"passed\":$PASS,\"failed\":$FAIL}" > artifacts/backend-summary.json
+          cp -r backend/target/surefire-reports artifacts/ 2>/dev/null || true
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: backend-report
+          path: artifacts/
+          retention-days: 30
+
+  # ───────────────────────────────────────────────────────────────────────────
+  web-tests:
+    name: 🌐 Web-app — Vitest + Selenium
+    runs-on: ubuntu-latest
+    outputs:
+      vitest_total: ${{ steps.vitest.outputs.total }}
+      vitest_passed: ${{ steps.vitest.outputs.passed }}
+      vitest_failed: ${{ steps.vitest.outputs.failed }}
+      selenium_total: ${{ steps.selenium.outputs.total }}
+      selenium_passed: ${{ steps.selenium.outputs.passed }}
+      selenium_failed: ${{ steps.selenium.outputs.failed }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install web-app dependencies
+        working-directory: web-app
+        run: npm install
+
+      - name: Run Vitest component tests
+        working-directory: web-app
+        run: npx vitest run --reporter=json --outputFile=reports/vitest-results.json
+        continue-on-error: true
+
+      - name: Summarize Vitest results
+        id: vitest
+        if: always()
+        run: |
+          T=0; P=0; F=0
+          if [ -f web-app/reports/vitest-results.json ]; then
+            T=$(node -e "const r=require('./web-app/reports/vitest-results.json'); console.log(r.numTotalTests||0)")
+            P=$(node -e "const r=require('./web-app/reports/vitest-results.json'); console.log(r.numPassedTests||0)")
+            F=$(node -e "const r=require('./web-app/reports/vitest-results.json'); console.log(r.numFailedTests||0)")
+          fi
+          echo "total=$T" >> $GITHUB_OUTPUT
+          echo "passed=$P" >> $GITHUB_OUTPUT
+          echo "failed=$F" >> $GITHUB_OUTPUT
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install Selenium test dependencies
+        run: pip install -r web-app/tests/requirements.txt
+
+      - name: Start Next.js server
+        working-directory: web-app
+        run: |
+          npm run build
+          nohup npm start > server.log 2>&1 &
+          for i in $(seq 1 30); do
+            curl -sf http://localhost:3000 > /dev/null && break
+            sleep 3
+          done
+
+      - name: Run Selenium E2E tests
+        env:
+          PYTHONPATH: ${{ github.workspace }}/web-app/tests/e2e
+        run: |
+          python -m pytest web-app/tests/e2e \
+            --junitxml=${{ github.workspace }}/web-app/reports/pytest-results.xml \
+            --tb=short -v
+        continue-on-error: true
+
+      - name: Summarize Selenium results
+        id: selenium
+        if: always()
+        run: |
+          T=0; F=0
+          XML=web-app/reports/pytest-results.xml
+          if [ -f "$XML" ]; then
+            SUITE=$(grep -o '<testsuite[^>]*>' "$XML" | head -1)
+            T=$(echo "$SUITE" | grep -o 'tests="[0-9]*"' | grep -o '[0-9]*')
+            FAILS=$(echo "$SUITE" | grep -o 'failures="[0-9]*"' | grep -o '[0-9]*')
+            ERRS=$(echo "$SUITE" | grep -o 'errors="[0-9]*"' | grep -o '[0-9]*')
+            T=${T:-0}; FAILS=${FAILS:-0}; ERRS=${ERRS:-0}
+            F=$((FAILS+ERRS))
+          fi
+          P=$((T-F))
+          echo "total=$T" >> $GITHUB_OUTPUT
+          echo "passed=$P" >> $GITHUB_OUTPUT
+          echo "failed=$F" >> $GITHUB_OUTPUT
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: web-report
+          path: |
+            web-app/reports/
+          retention-days: 30
+          if-no-files-found: ignore
+
+  # ───────────────────────────────────────────────────────────────────────────
+  mobile-tests:
+    name: 📱 Mobile-app — Jest + Appium (reports)
+    runs-on: ubuntu-latest
+    outputs:
+      jest_total: ${{ steps.jest.outputs.total }}
+      jest_passed: ${{ steps.jest.outputs.passed }}
+      jest_failed: ${{ steps.jest.outputs.failed }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Install mobile-app dependencies
+        working-directory: mobile-app
+        run: npm install --legacy-peer-deps
+
+      - name: Run Jest unit tests
+        working-directory: mobile-app
+        run: npx jest --json --outputFile=jest-results.json
+        continue-on-error: true
+
+      - name: Summarize Jest results
+        id: jest
+        if: always()
+        run: |
+          T=0; P=0; F=0
+          if [ -f mobile-app/jest-results.json ]; then
+            T=$(node -e "const r=require('./mobile-app/jest-results.json'); console.log(r.numTotalTests||0)")
+            P=$(node -e "const r=require('./mobile-app/jest-results.json'); console.log(r.numPassedTests||0)")
+            F=$(node -e "const r=require('./mobile-app/jest-results.json'); console.log(r.numFailedTests||0)")
+          fi
+          echo "total=$T" >> $GITHUB_OUTPUT
+          echo "passed=$P" >> $GITHUB_OUTPUT
+          echo "failed=$F" >> $GITHUB_OUTPUT
+
+      - name: Install Appium framework dependencies
+        working-directory: mobile-app/appium-tests
+        run: npm install
+
+      - name: Generate Appium reports (sample data — runs on physical device locally)
+        working-directory: mobile-app/appium-tests
+        run: |
+          mkdir -p reports
+          npx ts-node utilities/generateJsonReport.ts || true
+          npx ts-node utilities/generateHtmlReport.ts || true
+        continue-on-error: true
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: mobile-report
+          path: |
+            mobile-app/jest-results.json
+            mobile-app/appium-tests/reports/
+          retention-days: 30
+          if-no-files-found: ignore
+
+  # ───────────────────────────────────────────────────────────────────────────
+  master-report:
+    name: 📊 Compile Master Report & Deploy
+    runs-on: ubuntu-latest
+    needs: [backend-tests, web-tests, mobile-tests]
+    if: always()
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download all reports
+        uses: actions/download-artifact@v4
+        with:
+          path: all-reports
+
+      - name: Build master HTML report
+        run: |
+          mkdir -p site
+          BE_TOTAL="${{ needs.backend-tests.outputs.total || 0 }}"
+          BE_PASS="${{ needs.backend-tests.outputs.passed || 0 }}"
+          BE_FAIL="${{ needs.backend-tests.outputs.failed || 0 }}"
+          WEB_V_TOTAL="${{ needs.web-tests.outputs.vitest_total || 0 }}"
+          WEB_V_PASS="${{ needs.web-tests.outputs.vitest_passed || 0 }}"
+          WEB_V_FAIL="${{ needs.web-tests.outputs.vitest_failed || 0 }}"
+          WEB_S_TOTAL="${{ needs.web-tests.outputs.selenium_total || 0 }}"
+          WEB_S_PASS="${{ needs.web-tests.outputs.selenium_passed || 0 }}"
+          WEB_S_FAIL="${{ needs.web-tests.outputs.selenium_failed || 0 }}"
+          MOB_TOTAL="${{ needs.mobile-tests.outputs.jest_total || 0 }}"
+          MOB_PASS="${{ needs.mobile-tests.outputs.jest_passed || 0 }}"
+          MOB_FAIL="${{ needs.mobile-tests.outputs.jest_failed || 0 }}"
+
+          GRAND_TOTAL=$((BE_TOTAL+WEB_V_TOTAL+WEB_S_TOTAL+MOB_TOTAL))
+          GRAND_PASS=$((BE_PASS+WEB_V_PASS+WEB_S_PASS+MOB_PASS))
+          GRAND_FAIL=$((BE_FAIL+WEB_V_FAIL+WEB_S_FAIL+MOB_FAIL))
+
+          cat > site/index.html <<HTML
+          <!DOCTYPE html>
+          <html><head><meta charset="UTF-8"><title>AgriDirect — Master Test Report</title>
+          <style>
+            body{font-family:-apple-system,Segoe UI,sans-serif;background:#0d1117;color:#e6edf3;margin:0;padding:2rem}
+            h1{color:#58a6ff} h2{color:#79c0ff;margin-top:2rem}
+            table{width:100%;border-collapse:collapse;margin-top:1rem}
+            th,td{padding:10px 14px;border-bottom:1px solid #30363d;text-align:left}
+            th{background:#161b22}
+            .pass{color:#3fb950;font-weight:600} .fail{color:#f85149;font-weight:600}
+            .card{background:#161b22;border-radius:10px;padding:1.5rem;margin-bottom:1rem;border:1px solid #30363d}
+            .kpis{display:flex;gap:16px;flex-wrap:wrap}
+            .kpi{background:#161b22;border:1px solid #30363d;border-radius:10px;padding:1rem 1.5rem;flex:1;min-width:140px}
+            .kpi .val{font-size:1.8rem;font-weight:700} .kpi .lbl{font-size:.8rem;color:#8b949e}
+          </style></head><body>
+          <h1>AgriDirect — Master Test Report</h1>
+          <p>Run #${{ github.run_number }} · Commit ${{ github.sha }} · $(date -u '+%Y-%m-%d %H:%M UTC')</p>
+
+          <div class="kpis">
+            <div class="kpi"><div class="val">$GRAND_TOTAL</div><div class="lbl">Total tests</div></div>
+            <div class="kpi"><div class="val" style="color:#3fb950">$GRAND_PASS</div><div class="lbl">Passed</div></div>
+            <div class="kpi"><div class="val" style="color:#f85149">$GRAND_FAIL</div><div class="lbl">Failed</div></div>
+          </div>
+
+          <div class="card">
+          <h2>☕ Backend (JUnit)</h2>
+          <table><tr><th>Total</th><th>Passed</th><th>Failed</th></tr>
+          <tr><td>$BE_TOTAL</td><td class="pass">$BE_PASS</td><td class="fail">$BE_FAIL</td></tr></table>
+          </div>
+
+          <div class="card">
+          <h2>🌐 Web-app</h2>
+          <table><tr><th>Suite</th><th>Total</th><th>Passed</th><th>Failed</th></tr>
+          <tr><td>Vitest (component)</td><td>$WEB_V_TOTAL</td><td class="pass">$WEB_V_PASS</td><td class="fail">$WEB_V_FAIL</td></tr>
+          <tr><td>Selenium (E2E)</td><td>$WEB_S_TOTAL</td><td class="pass">$WEB_S_PASS</td><td class="fail">$WEB_S_FAIL</td></tr>
+          </table>
+          </div>
+
+          <div class="card">
+          <h2>📱 Mobile-app</h2>
+          <table><tr><th>Suite</th><th>Total</th><th>Passed</th><th>Failed</th></tr>
+          <tr><td>Jest (unit)</td><td>$MOB_TOTAL</td><td class="pass">$MOB_PASS</td><td class="fail">$MOB_FAIL</td></tr>
+          </table>
+          <p style="color:#8b949e;font-size:.85rem">Appium E2E tests run on a physical Android device locally — not on CI (no hardware emulator support on free runners).</p>
+          </div>
+
+          <p style="color:#8b949e;margin-top:2rem">Generated by GitHub Actions · <a href="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" style="color:#58a6ff">View this run</a></p>
+          </body></html>
+          HTML
+
+      - name: Write GitHub Actions Summary
+        if: always()
+        run: |
+          {
+            echo "# 📊 AgriDirect — Master Test Report"
+            echo ""
+            echo "| Component | Suite | Total | ✅ Passed | ❌ Failed |"
+            echo "|---|---|---|---|---|"
+            echo "| ☕ Backend | JUnit | ${{ needs.backend-tests.outputs.total || 0 }} | ${{ needs.backend-tests.outputs.passed || 0 }} | ${{ needs.backend-tests.outputs.failed || 0 }} |"
+            echo "| 🌐 Web-app | Vitest | ${{ needs.web-tests.outputs.vitest_total || 0 }} | ${{ needs.web-tests.outputs.vitest_passed || 0 }} | ${{ needs.web-tests.outputs.vitest_failed || 0 }} |"
+            echo "| 🌐 Web-app | Selenium | ${{ needs.web-tests.outputs.selenium_total || 0 }} | ${{ needs.web-tests.outputs.selenium_passed || 0 }} | ${{ needs.web-tests.outputs.selenium_failed || 0 }} |"
+            echo "| 📱 Mobile-app | Jest | ${{ needs.mobile-tests.outputs.jest_total || 0 }} | ${{ needs.mobile-tests.outputs.jest_passed || 0 }} | ${{ needs.mobile-tests.outputs.jest_failed || 0 }} |"
+            echo ""
+            echo "> 📎 Full dashboard published to GitHub Pages after this run completes (main branch only)."
+          } >> $GITHUB_STEP_SUMMARY
+
+      - name: Upload Pages artifact
+        if: github.ref == 'refs/heads/main'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+      - name: Deploy to GitHub Pages
+        if: github.ref == 'refs/heads/main'
+        uses: actions/deploy-pages@v4
