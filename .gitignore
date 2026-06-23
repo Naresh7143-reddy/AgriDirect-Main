@@ -1,0 +1,15 @@
+# Root-level ignores — subfolders have their own .gitignore too
+node_modules/
+*.log
+.DS_Store
+.env
+.env.*
+!*/.env.example
+*.keystore
+!*/debug.keystore
+google-services.json
+firebase-service-account.json
+*.jks
+*.pem
+.idea/
+.vscode/
