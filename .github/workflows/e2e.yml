@@ -14,68 +14,13 @@ permissions:
 
 jobs:
   # ───────────────────────────────────────────────────────────────────────────
-  backend-tests:
-    name: ☕ Backend — Unit Tests
+  selenium-web:
+    name: 🌐 Selenium — Website Tests
     runs-on: ubuntu-latest
     outputs:
       total: ${{ steps.summarize.outputs.total }}
       passed: ${{ steps.summarize.outputs.passed }}
       failed: ${{ steps.summarize.outputs.failed }}
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Setup Java 17
-        uses: actions/setup-java@v4
-        with:
-          distribution: temurin
-          java-version: '17'
-          cache: maven
-          cache-dependency-path: backend/pom.xml
-
-      - name: Run backend unit tests
-        working-directory: backend
-        run: chmod +x mvnw && ./mvnw -B test
-        continue-on-error: true
-
-      - name: Summarize results
-        id: summarize
-        if: always()
-        run: |
-          TOTAL=0; PASS=0; FAIL=0
-          for f in backend/target/surefire-reports/*.xml; do
-            [ -f "$f" ] || continue
-            T=$(grep -o 'tests="[0-9]*"' "$f" | head -1 | grep -o '[0-9]*')
-            F=$(grep -o 'failures="[0-9]*"' "$f" | head -1 | grep -o '[0-9]*')
-            E=$(grep -o 'errors="[0-9]*"' "$f" | head -1 | grep -o '[0-9]*')
-            T=${T:-0}; F=${F:-0}; E=${E:-0}
-            TOTAL=$((TOTAL+T)); FAIL=$((FAIL+F+E))
-          done
-          PASS=$((TOTAL-FAIL))
-          echo "total=$TOTAL" >> $GITHUB_OUTPUT
-          echo "passed=$PASS" >> $GITHUB_OUTPUT
-          echo "failed=$FAIL" >> $GITHUB_OUTPUT
-          mkdir -p artifacts
-          echo "{\"total\":$TOTAL,\"passed\":$PASS,\"failed\":$FAIL}" > artifacts/backend-summary.json
-          cp -r backend/target/surefire-reports artifacts/ 2>/dev/null || true
-
-      - uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: backend-report
-          path: artifacts/
-          retention-days: 30
-
-  # ───────────────────────────────────────────────────────────────────────────
-  web-tests:
-    name: 🌐 Web-app — Vitest + Selenium
-    runs-on: ubuntu-latest
-    outputs:
-      vitest_total: ${{ steps.vitest.outputs.total }}
-      vitest_passed: ${{ steps.vitest.outputs.passed }}
-      vitest_failed: ${{ steps.vitest.outputs.failed }}
-      selenium_total: ${{ steps.selenium.outputs.total }}
-      selenium_passed: ${{ steps.selenium.outputs.passed }}
-      selenium_failed: ${{ steps.selenium.outputs.failed }}
     steps:
       - uses: actions/checkout@v4
 
@@ -86,25 +31,6 @@ jobs:
       - name: Install web-app dependencies
         working-directory: web-app
         run: npm install
-
-      - name: Run Vitest component tests
-        working-directory: web-app
-        run: npx vitest run --reporter=json --outputFile=reports/vitest-results.json
-        continue-on-error: true
-
-      - name: Summarize Vitest results
-        id: vitest
-        if: always()
-        run: |
-          T=0; P=0; F=0
-          if [ -f web-app/reports/vitest-results.json ]; then
-            T=$(node -e "const r=require('./web-app/reports/vitest-results.json'); console.log(r.numTotalTests||0)")
-            P=$(node -e "const r=require('./web-app/reports/vitest-results.json'); console.log(r.numPassedTests||0)")
-            F=$(node -e "const r=require('./web-app/reports/vitest-results.json'); console.log(r.numFailedTests||0)")
-          fi
-          echo "total=$T" >> $GITHUB_OUTPUT
-          echo "passed=$P" >> $GITHUB_OUTPUT
-          echo "failed=$F" >> $GITHUB_OUTPUT
 
       - name: Setup Python
         uses: actions/setup-python@v5
@@ -133,10 +59,11 @@ jobs:
             --tb=short -v
         continue-on-error: true
 
-      - name: Summarize Selenium results
-        id: selenium
+      - name: Summarize results
+        id: summarize
         if: always()
         run: |
+          set +e
           T=0; F=0
           XML=web-app/reports/pytest-results.xml
           if [ -f "$XML" ]; then
@@ -151,24 +78,24 @@ jobs:
           echo "total=$T" >> $GITHUB_OUTPUT
           echo "passed=$P" >> $GITHUB_OUTPUT
           echo "failed=$F" >> $GITHUB_OUTPUT
+          exit 0
 
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: web-report
-          path: |
-            web-app/reports/
+          name: selenium-web-report
+          path: web-app/reports/
           retention-days: 30
           if-no-files-found: ignore
 
   # ───────────────────────────────────────────────────────────────────────────
-  mobile-tests:
-    name: 📱 Mobile-app — Jest + Appium (reports)
+  appium-android:
+    name: 🤖 Appium — Android Tests
     runs-on: ubuntu-latest
     outputs:
-      jest_total: ${{ steps.jest.outputs.total }}
-      jest_passed: ${{ steps.jest.outputs.passed }}
-      jest_failed: ${{ steps.jest.outputs.failed }}
+      total: ${{ steps.summarize.outputs.total }}
+      passed: ${{ steps.summarize.outputs.passed }}
+      failed: ${{ steps.summarize.outputs.failed }}
     steps:
       - uses: actions/checkout@v4
 
@@ -176,34 +103,11 @@ jobs:
         with:
           node-version: '24'
 
-      - name: Install mobile-app dependencies
-        working-directory: mobile-app
-        run: npm install --legacy-peer-deps
-
-      - name: Run Jest unit tests
-        working-directory: mobile-app
-        run: npx jest --json --outputFile=jest-results.json
-        continue-on-error: true
-
-      - name: Summarize Jest results
-        id: jest
-        if: always()
-        run: |
-          T=0; P=0; F=0
-          if [ -f mobile-app/jest-results.json ]; then
-            T=$(node -e "const r=require('./mobile-app/jest-results.json'); console.log(r.numTotalTests||0)")
-            P=$(node -e "const r=require('./mobile-app/jest-results.json'); console.log(r.numPassedTests||0)")
-            F=$(node -e "const r=require('./mobile-app/jest-results.json'); console.log(r.numFailedTests||0)")
-          fi
-          echo "total=$T" >> $GITHUB_OUTPUT
-          echo "passed=$P" >> $GITHUB_OUTPUT
-          echo "failed=$F" >> $GITHUB_OUTPUT
-
       - name: Install Appium framework dependencies
         working-directory: mobile-app/appium-tests
         run: npm install
 
-      - name: Generate Appium reports (sample data — runs on physical device locally)
+      - name: Generate Appium reports (sample data — full suite runs on physical device locally)
         working-directory: mobile-app/appium-tests
         run: |
           mkdir -p reports
@@ -211,13 +115,233 @@ jobs:
           npx ts-node utilities/generateHtmlReport.ts || true
         continue-on-error: true
 
+      - name: Summarize results
+        id: summarize
+        if: always()
+        run: |
+          set +e
+          T=0; P=0; F=0
+          JSON=mobile-app/appium-tests/reports/test-report-latest.json
+          if [ -f "$JSON" ]; then
+            T=$(node -e "const r=require('./$JSON'); console.log(r.summary.total||0)")
+            P=$(node -e "const r=require('./$JSON'); console.log(r.summary.passed||0)")
+            F=$(node -e "const r=require('./$JSON'); console.log(r.summary.failed||0)")
+          fi
+          echo "total=$T" >> $GITHUB_OUTPUT
+          echo "passed=$P" >> $GITHUB_OUTPUT
+          echo "failed=$F" >> $GITHUB_OUTPUT
+          exit 0
+
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: mobile-report
+          name: appium-android-report
+          path: mobile-app/appium-tests/reports/
+          retention-days: 30
+          if-no-files-found: ignore
+
+  # ───────────────────────────────────────────────────────────────────────────
+  unit-tests-api:
+    name: ☕ Unit Tests — API
+    runs-on: ubuntu-latest
+    outputs:
+      total: ${{ steps.summarize.outputs.total }}
+      passed: ${{ steps.summarize.outputs.passed }}
+      failed: ${{ steps.summarize.outputs.failed }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: maven
+          cache-dependency-path: backend/pom.xml
+
+      - name: Run backend unit tests
+        working-directory: backend
+        run: chmod +x mvnw && ./mvnw -B test
+        continue-on-error: true
+
+      - name: Summarize results
+        id: summarize
+        if: always()
+        run: |
+          set +e
+          TOTAL=0; FAIL=0
+          for f in backend/target/surefire-reports/*.xml; do
+            [ -f "$f" ] || continue
+            T=$(grep -o 'tests="[0-9]*"' "$f" | head -1 | grep -o '[0-9]*')
+            F=$(grep -o 'failures="[0-9]*"' "$f" | head -1 | grep -o '[0-9]*')
+            E=$(grep -o 'errors="[0-9]*"' "$f" | head -1 | grep -o '[0-9]*')
+            T=${T:-0}; F=${F:-0}; E=${E:-0}
+            TOTAL=$((TOTAL+T)); FAIL=$((FAIL+F+E))
+          done
+          PASS=$((TOTAL-FAIL))
+          echo "total=$TOTAL" >> $GITHUB_OUTPUT
+          echo "passed=$PASS" >> $GITHUB_OUTPUT
+          echo "failed=$FAIL" >> $GITHUB_OUTPUT
+          mkdir -p artifacts
+          cp -r backend/target/surefire-reports artifacts/ 2>/dev/null || true
+          exit 0
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: unit-tests-api-report
+          path: artifacts/
+          retention-days: 30
+          if-no-files-found: ignore
+
+  # ───────────────────────────────────────────────────────────────────────────
+  validation-tests:
+    name: ✅ Validation Tests
+    runs-on: ubuntu-latest
+    outputs:
+      total: ${{ steps.summarize.outputs.total }}
+      passed: ${{ steps.summarize.outputs.passed }}
+      failed: ${{ steps.summarize.outputs.failed }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Install web-app dependencies
+        working-directory: web-app
+        run: npm install
+
+      - name: Run Vitest component tests (web-app)
+        working-directory: web-app
+        run: npx vitest run --reporter=json --outputFile=reports/vitest-results.json
+        continue-on-error: true
+
+      - name: Install mobile-app dependencies
+        working-directory: mobile-app
+        run: npm install --legacy-peer-deps
+
+      - name: Run Jest unit tests (mobile-app)
+        working-directory: mobile-app
+        run: npx jest --json --outputFile=jest-results.json
+        continue-on-error: true
+
+      - name: Summarize results
+        id: summarize
+        if: always()
+        run: |
+          set +e
+          VT=0; VP=0; VF=0
+          if [ -f web-app/reports/vitest-results.json ]; then
+            VT=$(node -e "const r=require('./web-app/reports/vitest-results.json'); console.log(r.numTotalTests||0)")
+            VP=$(node -e "const r=require('./web-app/reports/vitest-results.json'); console.log(r.numPassedTests||0)")
+            VF=$(node -e "const r=require('./web-app/reports/vitest-results.json'); console.log(r.numFailedTests||0)")
+          fi
+          JT=0; JP=0; JF=0
+          if [ -f mobile-app/jest-results.json ]; then
+            JT=$(node -e "const r=require('./mobile-app/jest-results.json'); console.log(r.numTotalTests||0)")
+            JP=$(node -e "const r=require('./mobile-app/jest-results.json'); console.log(r.numPassedTests||0)")
+            JF=$(node -e "const r=require('./mobile-app/jest-results.json'); console.log(r.numFailedTests||0)")
+          fi
+          echo "total=$((VT+JT))" >> $GITHUB_OUTPUT
+          echo "passed=$((VP+JP))" >> $GITHUB_OUTPUT
+          echo "failed=$((VF+JF))" >> $GITHUB_OUTPUT
+          exit 0
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: validation-tests-report
           path: |
+            web-app/reports/vitest-results.json
             mobile-app/jest-results.json
-            mobile-app/appium-tests/reports/
+          retention-days: 30
+          if-no-files-found: ignore
+
+  # ───────────────────────────────────────────────────────────────────────────
+  deployment-status:
+    name: 🚀 Deployment Status
+    runs-on: ubuntu-latest
+    outputs:
+      total: ${{ steps.summarize.outputs.total }}
+      passed: ${{ steps.summarize.outputs.passed }}
+      failed: ${{ steps.summarize.outputs.failed }}
+    steps:
+      - name: Check live deployments
+        id: summarize
+        run: |
+          set +e
+          declare -A targets=(
+            ["web-app (Vercel)"]="https://agridirect-web.vercel.app"
+            ["backend (Render)"]="https://agridirect-backend-80yz.onrender.com/api/products"
+          )
+          TOTAL=0; PASS=0
+          for name in "${!targets[@]}"; do
+            TOTAL=$((TOTAL+1))
+            URL="${targets[$name]}"
+            CODE=$(curl -s -o /dev/null -w "%{http_code}" --max-time 15 "$URL")
+            if [ "$CODE" -ge 200 ] && [ "$CODE" -lt 400 ]; then
+              echo "✅ $name reachable ($URL) — HTTP $CODE"
+              PASS=$((PASS+1))
+            else
+              echo "⚠️ $name unreachable ($URL) — HTTP $CODE"
+            fi
+          done
+          FAIL=$((TOTAL-PASS))
+          echo "total=$TOTAL" >> $GITHUB_OUTPUT
+          echo "passed=$PASS" >> $GITHUB_OUTPUT
+          echo "failed=$FAIL" >> $GITHUB_OUTPUT
+          exit 0
+
+  # ───────────────────────────────────────────────────────────────────────────
+  load-testing:
+    name: 📈 Load Testing — Performance
+    runs-on: ubuntu-latest
+    outputs:
+      total: ${{ steps.summarize.outputs.total }}
+      passed: ${{ steps.summarize.outputs.passed }}
+      failed: ${{ steps.summarize.outputs.failed }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install autocannon
+        run: npm install -g autocannon
+
+      - name: Run load test against live backend
+        id: summarize
+        run: |
+          set +e
+          URL="https://agridirect-backend-80yz.onrender.com/api/products"
+          autocannon -c 10 -d 15 -j "$URL" > load-result.json 2>&1
+          if [ -s load-result.json ] && node -e "require('./load-result.json')" 2>/dev/null; then
+            ERRORS=$(node -e "const r=require('./load-result.json'); console.log(r.errors||0)")
+            TIMEOUTS=$(node -e "const r=require('./load-result.json'); console.log(r.timeouts||0)")
+            REQUESTS=$(node -e "const r=require('./load-result.json'); console.log(r.requests.total||0)")
+            AVG_LATENCY=$(node -e "const r=require('./load-result.json'); console.log(r.latency.average||0)")
+            echo "Requests: $REQUESTS, Errors: $ERRORS, Timeouts: $TIMEOUTS, Avg latency: ${AVG_LATENCY}ms"
+            FAILED=$((ERRORS+TIMEOUTS))
+            PASSED=$([ "$FAILED" -eq 0 ] && echo 1 || echo 0)
+            echo "total=1" >> $GITHUB_OUTPUT
+            echo "passed=$PASSED" >> $GITHUB_OUTPUT
+            echo "failed=$((1-PASSED))" >> $GITHUB_OUTPUT
+          else
+            echo "Load test could not reach target — backend may be sleeping (free tier)."
+            echo "total=1" >> $GITHUB_OUTPUT
+            echo "passed=0" >> $GITHUB_OUTPUT
+            echo "failed=1" >> $GITHUB_OUTPUT
+          fi
+          exit 0
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: load-testing-report
+          path: load-result.json
           retention-days: 30
           if-no-files-found: ignore
 
@@ -225,7 +349,7 @@ jobs:
   master-report:
     name: 📊 Compile Master Report & Deploy
     runs-on: ubuntu-latest
-    needs: [backend-tests, web-tests, mobile-tests]
+    needs: [selenium-web, appium-android, unit-tests-api, validation-tests, deployment-status, load-testing]
     if: always()
     steps:
       - uses: actions/checkout@v4
@@ -238,22 +362,28 @@ jobs:
       - name: Build master HTML report
         run: |
           mkdir -p site
-          BE_TOTAL="${{ needs.backend-tests.outputs.total || 0 }}"
-          BE_PASS="${{ needs.backend-tests.outputs.passed || 0 }}"
-          BE_FAIL="${{ needs.backend-tests.outputs.failed || 0 }}"
-          WEB_V_TOTAL="${{ needs.web-tests.outputs.vitest_total || 0 }}"
-          WEB_V_PASS="${{ needs.web-tests.outputs.vitest_passed || 0 }}"
-          WEB_V_FAIL="${{ needs.web-tests.outputs.vitest_failed || 0 }}"
-          WEB_S_TOTAL="${{ needs.web-tests.outputs.selenium_total || 0 }}"
-          WEB_S_PASS="${{ needs.web-tests.outputs.selenium_passed || 0 }}"
-          WEB_S_FAIL="${{ needs.web-tests.outputs.selenium_failed || 0 }}"
-          MOB_TOTAL="${{ needs.mobile-tests.outputs.jest_total || 0 }}"
-          MOB_PASS="${{ needs.mobile-tests.outputs.jest_passed || 0 }}"
-          MOB_FAIL="${{ needs.mobile-tests.outputs.jest_failed || 0 }}"
+          SEL_T="${{ needs.selenium-web.outputs.total || 0 }}"
+          SEL_P="${{ needs.selenium-web.outputs.passed || 0 }}"
+          SEL_F="${{ needs.selenium-web.outputs.failed || 0 }}"
+          APP_T="${{ needs.appium-android.outputs.total || 0 }}"
+          APP_P="${{ needs.appium-android.outputs.passed || 0 }}"
+          APP_F="${{ needs.appium-android.outputs.failed || 0 }}"
+          API_T="${{ needs.unit-tests-api.outputs.total || 0 }}"
+          API_P="${{ needs.unit-tests-api.outputs.passed || 0 }}"
+          API_F="${{ needs.unit-tests-api.outputs.failed || 0 }}"
+          VAL_T="${{ needs.validation-tests.outputs.total || 0 }}"
+          VAL_P="${{ needs.validation-tests.outputs.passed || 0 }}"
+          VAL_F="${{ needs.validation-tests.outputs.failed || 0 }}"
+          DEP_T="${{ needs.deployment-status.outputs.total || 0 }}"
+          DEP_P="${{ needs.deployment-status.outputs.passed || 0 }}"
+          DEP_F="${{ needs.deployment-status.outputs.failed || 0 }}"
+          LOAD_T="${{ needs.load-testing.outputs.total || 0 }}"
+          LOAD_P="${{ needs.load-testing.outputs.passed || 0 }}"
+          LOAD_F="${{ needs.load-testing.outputs.failed || 0 }}"
 
-          GRAND_TOTAL=$((BE_TOTAL+WEB_V_TOTAL+WEB_S_TOTAL+MOB_TOTAL))
-          GRAND_PASS=$((BE_PASS+WEB_V_PASS+WEB_S_PASS+MOB_PASS))
-          GRAND_FAIL=$((BE_FAIL+WEB_V_FAIL+WEB_S_FAIL+MOB_FAIL))
+          GRAND_TOTAL=$((SEL_T+APP_T+API_T+VAL_T+DEP_T+LOAD_T))
+          GRAND_PASS=$((SEL_P+APP_P+API_P+VAL_P+DEP_P+LOAD_P))
+          GRAND_FAIL=$((SEL_F+APP_F+API_F+VAL_F+DEP_F+LOAD_F))
 
           cat > site/index.html <<HTML
           <!DOCTYPE html>
@@ -279,27 +409,30 @@ jobs:
             <div class="kpi"><div class="val" style="color:#f85149">$GRAND_FAIL</div><div class="lbl">Failed</div></div>
           </div>
 
-          <div class="card">
-          <h2>☕ Backend (JUnit)</h2>
+          <div class="card"><h2>🌐 Selenium — Website Tests</h2>
           <table><tr><th>Total</th><th>Passed</th><th>Failed</th></tr>
-          <tr><td>$BE_TOTAL</td><td class="pass">$BE_PASS</td><td class="fail">$BE_FAIL</td></tr></table>
-          </div>
+          <tr><td>$SEL_T</td><td class="pass">$SEL_P</td><td class="fail">$SEL_F</td></tr></table></div>
 
-          <div class="card">
-          <h2>🌐 Web-app</h2>
-          <table><tr><th>Suite</th><th>Total</th><th>Passed</th><th>Failed</th></tr>
-          <tr><td>Vitest (component)</td><td>$WEB_V_TOTAL</td><td class="pass">$WEB_V_PASS</td><td class="fail">$WEB_V_FAIL</td></tr>
-          <tr><td>Selenium (E2E)</td><td>$WEB_S_TOTAL</td><td class="pass">$WEB_S_PASS</td><td class="fail">$WEB_S_FAIL</td></tr>
-          </table>
-          </div>
+          <div class="card"><h2>🤖 Appium — Android Tests</h2>
+          <table><tr><th>Total</th><th>Passed</th><th>Failed</th></tr>
+          <tr><td>$APP_T</td><td class="pass">$APP_P</td><td class="fail">$APP_F</td></tr></table>
+          <p style="color:#8b949e;font-size:.85rem">Full Appium device suite runs locally — CI generates report scaffold only (no KVM on free runners).</p></div>
 
-          <div class="card">
-          <h2>📱 Mobile-app</h2>
-          <table><tr><th>Suite</th><th>Total</th><th>Passed</th><th>Failed</th></tr>
-          <tr><td>Jest (unit)</td><td>$MOB_TOTAL</td><td class="pass">$MOB_PASS</td><td class="fail">$MOB_FAIL</td></tr>
-          </table>
-          <p style="color:#8b949e;font-size:.85rem">Appium E2E tests run on a physical Android device locally — not on CI (no hardware emulator support on free runners).</p>
-          </div>
+          <div class="card"><h2>☕ Unit Tests — API</h2>
+          <table><tr><th>Total</th><th>Passed</th><th>Failed</th></tr>
+          <tr><td>$API_T</td><td class="pass">$API_P</td><td class="fail">$API_F</td></tr></table></div>
+
+          <div class="card"><h2>✅ Validation Tests</h2>
+          <table><tr><th>Total</th><th>Passed</th><th>Failed</th></tr>
+          <tr><td>$VAL_T</td><td class="pass">$VAL_P</td><td class="fail">$VAL_F</td></tr></table></div>
+
+          <div class="card"><h2>🚀 Deployment Status</h2>
+          <table><tr><th>Total</th><th>Passed</th><th>Failed</th></tr>
+          <tr><td>$DEP_T</td><td class="pass">$DEP_P</td><td class="fail">$DEP_F</td></tr></table></div>
+
+          <div class="card"><h2>📈 Load Testing — Performance</h2>
+          <table><tr><th>Total</th><th>Passed</th><th>Failed</th></tr>
+          <tr><td>$LOAD_T</td><td class="pass">$LOAD_P</td><td class="fail">$LOAD_F</td></tr></table></div>
 
           <p style="color:#8b949e;margin-top:2rem">Generated by GitHub Actions · <a href="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" style="color:#58a6ff">View this run</a></p>
           </body></html>
@@ -311,12 +444,14 @@ jobs:
           {
             echo "# 📊 AgriDirect — Master Test Report"
             echo ""
-            echo "| Component | Suite | Total | ✅ Passed | ❌ Failed |"
-            echo "|---|---|---|---|---|"
-            echo "| ☕ Backend | JUnit | ${{ needs.backend-tests.outputs.total || 0 }} | ${{ needs.backend-tests.outputs.passed || 0 }} | ${{ needs.backend-tests.outputs.failed || 0 }} |"
-            echo "| 🌐 Web-app | Vitest | ${{ needs.web-tests.outputs.vitest_total || 0 }} | ${{ needs.web-tests.outputs.vitest_passed || 0 }} | ${{ needs.web-tests.outputs.vitest_failed || 0 }} |"
-            echo "| 🌐 Web-app | Selenium | ${{ needs.web-tests.outputs.selenium_total || 0 }} | ${{ needs.web-tests.outputs.selenium_passed || 0 }} | ${{ needs.web-tests.outputs.selenium_failed || 0 }} |"
-            echo "| 📱 Mobile-app | Jest | ${{ needs.mobile-tests.outputs.jest_total || 0 }} | ${{ needs.mobile-tests.outputs.jest_passed || 0 }} | ${{ needs.mobile-tests.outputs.jest_failed || 0 }} |"
+            echo "| Suite | Total | ✅ Passed | ❌ Failed |"
+            echo "|---|---|---|---|"
+            echo "| 🌐 Selenium — Website Tests | ${{ needs.selenium-web.outputs.total || 0 }} | ${{ needs.selenium-web.outputs.passed || 0 }} | ${{ needs.selenium-web.outputs.failed || 0 }} |"
+            echo "| 🤖 Appium — Android Tests | ${{ needs.appium-android.outputs.total || 0 }} | ${{ needs.appium-android.outputs.passed || 0 }} | ${{ needs.appium-android.outputs.failed || 0 }} |"
+            echo "| ☕ Unit Tests — API | ${{ needs.unit-tests-api.outputs.total || 0 }} | ${{ needs.unit-tests-api.outputs.passed || 0 }} | ${{ needs.unit-tests-api.outputs.failed || 0 }} |"
+            echo "| ✅ Validation Tests | ${{ needs.validation-tests.outputs.total || 0 }} | ${{ needs.validation-tests.outputs.passed || 0 }} | ${{ needs.validation-tests.outputs.failed || 0 }} |"
+            echo "| 🚀 Deployment Status | ${{ needs.deployment-status.outputs.total || 0 }} | ${{ needs.deployment-status.outputs.passed || 0 }} | ${{ needs.deployment-status.outputs.failed || 0 }} |"
+            echo "| 📈 Load Testing — Performance | ${{ needs.load-testing.outputs.total || 0 }} | ${{ needs.load-testing.outputs.passed || 0 }} | ${{ needs.load-testing.outputs.failed || 0 }} |"
             echo ""
             echo "> 📎 Full dashboard published to GitHub Pages after this run completes (main branch only)."
           } >> $GITHUB_STEP_SUMMARY
@@ -329,4 +464,6 @@ jobs:
 
       - name: Deploy to GitHub Pages
         if: github.ref == 'refs/heads/main'
+        id: deploy
+        continue-on-error: true
         uses: actions/deploy-pages@v4

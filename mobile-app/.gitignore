@@ -77,7 +77,8 @@ audit-results.json
 api-test-report.md
 *_STATUS_REPORT.xlsx
 .claude/
-scripts/
+scripts/*
+!scripts/patch-reanimated.js
 AGRIDIRECT_WEB_PROMPTS.md
 PLAY_STORE_LISTING.txt
 RELEASE_CHECKLIST.txt
