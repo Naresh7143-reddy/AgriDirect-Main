@@ -5,6 +5,7 @@ import pytest
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
+from webdriver_manager.chrome import ChromeDriverManager
 
 BASE_URL = os.environ.get("TEST_BASE_URL", "http://localhost:3000")
 SCREENSHOTS_DIR = os.path.join(os.path.dirname(__file__), "..", "..", "reports", "screenshots")
@@ -43,7 +44,8 @@ def driver():
     # Disable web security so cookies work across same-origin in CI
     options.add_argument("--disable-web-security")
 
-    drv = webdriver.Chrome(options=options)
+    service = Service(ChromeDriverManager().install())
+    drv = webdriver.Chrome(service=service, options=options)
     drv.implicitly_wait(0)  # We use explicit waits only (no implicit)
     yield drv
     drv.quit()

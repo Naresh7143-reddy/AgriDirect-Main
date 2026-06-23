@@ -37,6 +37,9 @@ jobs:
         with:
           python-version: '3.12'
 
+      - name: Install Chrome browser
+        uses: browser-actions/setup-chrome@v1
+
       - name: Install Selenium test dependencies
         run: pip install -r web-app/tests/requirements.txt
 
@@ -63,22 +66,10 @@ jobs:
         id: summarize
         if: always()
         run: |
-          set +e
-          T=0; F=0
-          XML=web-app/reports/pytest-results.xml
-          if [ -f "$XML" ]; then
-            SUITE=$(grep -o '<testsuite[^>]*>' "$XML" | head -1)
-            T=$(echo "$SUITE" | grep -o 'tests="[0-9]*"' | grep -o '[0-9]*')
-            FAILS=$(echo "$SUITE" | grep -o 'failures="[0-9]*"' | grep -o '[0-9]*')
-            ERRS=$(echo "$SUITE" | grep -o 'errors="[0-9]*"' | grep -o '[0-9]*')
-            T=${T:-0}; FAILS=${FAILS:-0}; ERRS=${ERRS:-0}
-            F=$((FAILS+ERRS))
-          fi
-          P=$((T-F))
-          echo "total=$T" >> $GITHUB_OUTPUT
-          echo "passed=$P" >> $GITHUB_OUTPUT
-          echo "failed=$F" >> $GITHUB_OUTPUT
-          exit 0
+          python .github/scripts/junit_to_summary.py \
+            web-app/reports/pytest-results.xml \
+            "🌐 Selenium — Website Tests" \
+            web-app/reports/selenium-detail.json
 
       - uses: actions/upload-artifact@v4
         if: always()
@@ -168,23 +159,12 @@ jobs:
         id: summarize
         if: always()
         run: |
-          set +e
-          TOTAL=0; FAIL=0
-          for f in backend/target/surefire-reports/*.xml; do
-            [ -f "$f" ] || continue
-            T=$(grep -o 'tests="[0-9]*"' "$f" | head -1 | grep -o '[0-9]*')
-            F=$(grep -o 'failures="[0-9]*"' "$f" | head -1 | grep -o '[0-9]*')
-            E=$(grep -o 'errors="[0-9]*"' "$f" | head -1 | grep -o '[0-9]*')
-            T=${T:-0}; F=${F:-0}; E=${E:-0}
-            TOTAL=$((TOTAL+T)); FAIL=$((FAIL+F+E))
-          done
-          PASS=$((TOTAL-FAIL))
-          echo "total=$TOTAL" >> $GITHUB_OUTPUT
-          echo "passed=$PASS" >> $GITHUB_OUTPUT
-          echo "failed=$FAIL" >> $GITHUB_OUTPUT
           mkdir -p artifacts
+          python3 .github/scripts/junit_to_summary.py \
+            "backend/target/surefire-reports/*.xml" \
+            "☕ Unit Tests — API" \
+            artifacts/unit-tests-api-detail.json
           cp -r backend/target/surefire-reports artifacts/ 2>/dev/null || true
-          exit 0
 
       - uses: actions/upload-artifact@v4
         if: always()
@@ -227,23 +207,33 @@ jobs:
         run: npx jest --json --outputFile=jest-results.json
         continue-on-error: true
 
-      - name: Summarize results
+      - name: Summarize Vitest (web-app)
+        if: always()
+        run: |
+          node .github/scripts/jsjson_to_summary.js \
+            web-app/reports/vitest-results.json \
+            "✅ Validation Tests — Vitest (web-app)" \
+            web-app/reports/vitest-detail.json
+
+      - name: Summarize Jest (mobile-app)
+        if: always()
+        run: |
+          node .github/scripts/jsjson_to_summary.js \
+            mobile-app/jest-results.json \
+            "✅ Validation Tests — Jest (mobile-app)" \
+            mobile-app/jest-detail.json
+
+      - name: Combine totals
         id: summarize
         if: always()
         run: |
           set +e
-          VT=0; VP=0; VF=0
-          if [ -f web-app/reports/vitest-results.json ]; then
-            VT=$(node -e "const r=require('./web-app/reports/vitest-results.json'); console.log(r.numTotalTests||0)")
-            VP=$(node -e "const r=require('./web-app/reports/vitest-results.json'); console.log(r.numPassedTests||0)")
-            VF=$(node -e "const r=require('./web-app/reports/vitest-results.json'); console.log(r.numFailedTests||0)")
-          fi
-          JT=0; JP=0; JF=0
-          if [ -f mobile-app/jest-results.json ]; then
-            JT=$(node -e "const r=require('./mobile-app/jest-results.json'); console.log(r.numTotalTests||0)")
-            JP=$(node -e "const r=require('./mobile-app/jest-results.json'); console.log(r.numPassedTests||0)")
-            JF=$(node -e "const r=require('./mobile-app/jest-results.json'); console.log(r.numFailedTests||0)")
-          fi
+          VT=$(node -e "try{console.log(require('./web-app/reports/vitest-detail.json').total)}catch{console.log(0)}")
+          VP=$(node -e "try{console.log(require('./web-app/reports/vitest-detail.json').passed)}catch{console.log(0)}")
+          VF=$(node -e "try{console.log(require('./web-app/reports/vitest-detail.json').failed)}catch{console.log(0)}")
+          JT=$(node -e "try{console.log(require('./mobile-app/jest-detail.json').total)}catch{console.log(0)}")
+          JP=$(node -e "try{console.log(require('./mobile-app/jest-detail.json').passed)}catch{console.log(0)}")
+          JF=$(node -e "try{console.log(require('./mobile-app/jest-detail.json').failed)}catch{console.log(0)}")
           echo "total=$((VT+JT))" >> $GITHUB_OUTPUT
           echo "passed=$((VP+JP))" >> $GITHUB_OUTPUT
           echo "failed=$((VF+JF))" >> $GITHUB_OUTPUT
@@ -255,7 +245,9 @@ jobs:
           name: validation-tests-report
           path: |
             web-app/reports/vitest-results.json
+            web-app/reports/vitest-detail.json
             mobile-app/jest-results.json
+            mobile-app/jest-detail.json
           retention-days: 30
           if-no-files-found: ignore
 
