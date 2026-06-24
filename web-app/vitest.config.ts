@@ -8,7 +8,7 @@ export default defineConfig({
     environment: 'jsdom',
     globals: true,
     setupFiles: ['./tests/setup.ts'],
-    include: ['tests/components/**/*.test.{ts,tsx}'],
+    include: ['tests/components/**/*.test.{ts,tsx}', 'tests/unit/**/*.test.{ts,tsx}'],
     reporters: ['verbose', 'json'],
     outputFile: { json: './reports/vitest-results.json' },
     coverage: {

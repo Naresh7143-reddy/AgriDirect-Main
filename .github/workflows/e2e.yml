@@ -98,30 +98,48 @@ jobs:
         working-directory: mobile-app/appium-tests
         run: npm install
 
-      - name: Generate Appium reports (sample data — full suite runs on physical device locally)
+      - name: Type-check Appium specs (real compile check)
+        id: typecheck
         working-directory: mobile-app/appium-tests
         run: |
-          mkdir -p reports
-          npx ts-node utilities/generateJsonReport.ts || true
-          npx ts-node utilities/generateHtmlReport.ts || true
+          if npx tsc --noEmit; then
+            echo "result=passed" >> $GITHUB_OUTPUT
+          else
+            echo "result=failed" >> $GITHUB_OUTPUT
+          fi
         continue-on-error: true
 
-      - name: Summarize results
+      - name: Summarize results (catalog only — requires a real device)
         id: summarize
         if: always()
         run: |
-          set +e
-          T=0; P=0; F=0
-          JSON=mobile-app/appium-tests/reports/test-report-latest.json
-          if [ -f "$JSON" ]; then
-            T=$(node -e "const r=require('./$JSON'); console.log(r.summary.total||0)")
-            P=$(node -e "const r=require('./$JSON'); console.log(r.summary.passed||0)")
-            F=$(node -e "const r=require('./$JSON'); console.log(r.summary.failed||0)")
-          fi
-          echo "total=$T" >> $GITHUB_OUTPUT
-          echo "passed=$P" >> $GITHUB_OUTPUT
-          echo "failed=$F" >> $GITHUB_OUTPUT
-          exit 0
+          TC_RESULT="${{ steps.typecheck.outputs.result }}"
+          {
+            echo "## 🤖 Appium — Android Tests"
+            echo ""
+            echo "**This suite cannot run on GitHub-hosted runners** — Android emulators"
+            echo "need KVM hardware acceleration, which free CI runners don't have."
+            echo "These 202 test cases are real (chai assertions against a live Appium"
+            echo "session, not fabricated passes) and run on a physical device locally:"
+            echo '`cd mobile-app/appium-tests && npx wdio run config/wdio.conf.ts`'
+            echo ""
+            echo "TypeScript compile check: **$TC_RESULT**"
+            echo ""
+            echo "| Spec file | Real test cases |"
+            echo "|---|---|"
+            echo "| auth/login.spec.ts | 11 |"
+            echo "| buyer/buyer.spec.ts | 16 |"
+            echo "| buyer/buyer.extended.spec.ts | 60 |"
+            echo "| farmer/farmer.spec.ts | 16 |"
+            echo "| farmer/farmer.extended.spec.ts | 50 |"
+            echo "| delivery/delivery.spec.ts | 11 |"
+            echo "| delivery/delivery.extended.spec.ts | 20 |"
+            echo "| e2e/fullJourney.spec.ts | 18 |"
+            echo "| **Total** | **202** |"
+          } >> $GITHUB_STEP_SUMMARY
+          echo "total=202" >> $GITHUB_OUTPUT
+          echo "passed=0" >> $GITHUB_OUTPUT
+          echo "failed=0" >> $GITHUB_OUTPUT
 
       - uses: actions/upload-artifact@v4
         if: always()
@@ -299,41 +317,22 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '24'
 
-      - name: Install autocannon
-        run: npm install -g autocannon
-
-      - name: Run load test against live backend
+      - name: Fire 300 real requests at the live backend
         id: summarize
         run: |
-          set +e
-          URL="https://agridirect-backend-80yz.onrender.com/api/products"
-          autocannon -c 10 -d 15 -j "$URL" > load-result.json 2>&1
-          if [ -s load-result.json ] && node -e "require('./load-result.json')" 2>/dev/null; then
-            ERRORS=$(node -e "const r=require('./load-result.json'); console.log(r.errors||0)")
-            TIMEOUTS=$(node -e "const r=require('./load-result.json'); console.log(r.timeouts||0)")
-            REQUESTS=$(node -e "const r=require('./load-result.json'); console.log(r.requests.total||0)")
-            AVG_LATENCY=$(node -e "const r=require('./load-result.json'); console.log(r.latency.average||0)")
-            echo "Requests: $REQUESTS, Errors: $ERRORS, Timeouts: $TIMEOUTS, Avg latency: ${AVG_LATENCY}ms"
-            FAILED=$((ERRORS+TIMEOUTS))
-            PASSED=$([ "$FAILED" -eq 0 ] && echo 1 || echo 0)
-            echo "total=1" >> $GITHUB_OUTPUT
-            echo "passed=$PASSED" >> $GITHUB_OUTPUT
-            echo "failed=$((1-PASSED))" >> $GITHUB_OUTPUT
-          else
-            echo "Load test could not reach target — backend may be sleeping (free tier)."
-            echo "total=1" >> $GITHUB_OUTPUT
-            echo "passed=0" >> $GITHUB_OUTPUT
-            echo "failed=1" >> $GITHUB_OUTPUT
-          fi
-          exit 0
+          node .github/scripts/load_test_300.js \
+            "https://agridirect-backend-80yz.onrender.com/api/products" \
+            300 \
+            10 \
+            load-testing-detail.json
 
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: load-testing-report
-          path: load-result.json
+          path: load-testing-detail.json
           retention-days: 30
           if-no-files-found: ignore
 
