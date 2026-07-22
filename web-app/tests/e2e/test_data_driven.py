@@ -21,15 +21,26 @@ def _valid_phones(n):
 
 
 def _invalid_phones(n):
-    """n distinct invalid inputs: wrong length or non-numeric."""
+    """n distinct invalid inputs: wrong length or non-numeric.
+
+    NOTE: The 'too long' case must NOT be a pure-digit string longer than 10,
+    because browsers enforce maxlength=10 and silently truncate pure-digit
+    inputs to 10 chars, accidentally producing a valid number.  Instead we
+    use short alphanumeric strings whose digit-count is < 10 regardless of
+    any browser coercion.
+    """
     out = []
     for i in range(n):
         if i % 3 == 0:
-            out.append(str(10**i % 10**9))           # too short
+            # Too short: pure digit string with fewer than 10 digits
+            out.append(str(10**i % 10**9))
         elif i % 3 == 1:
-            out.append(str(9000000000 + i) + "99")    # too long
+            # Non-numeric / mixed — digits are present but total digits < 10
+            # e.g. "9abc0001xyz" → 5 digits after stripping → still invalid
+            out.append(f"9abc{i:04d}xyz")
         else:
-            out.append(f"98abc{i:05d}")               # non-numeric chars
+            # Non-numeric chars embedded in the middle
+            out.append(f"98abc{i:05d}")
     return out
 
 
