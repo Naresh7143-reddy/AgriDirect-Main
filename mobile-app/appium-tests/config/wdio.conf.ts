@@ -1,10 +1,11 @@
-import type { Options } from '@wdio/types';
 import path from 'path';
+import type { Options } from '@wdio/types';
 
 const APK_PATH = process.env.APK_PATH ||
   path.resolve(__dirname, '../../android/app/build/outputs/apk/release/app-release.apk');
 
-export const config: Options.Testrunner = {
+// WebdriverIO config with capabilities properly typed
+export const config: Options.Testrunner & { capabilities: any } = {
   runner: 'local',
   port: 4723,
 

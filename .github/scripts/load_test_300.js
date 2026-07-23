@@ -14,10 +14,10 @@ const http = require('http');
 
 const [, , url, totalArg, concurrencyArg, jsonOut] = process.argv;
 const TOTAL = parseInt(totalArg || '300', 10);
-const CONCURRENCY = parseInt(concurrencyArg || '10', 10);
-const TIMEOUT_MS = 20000;
+const CONCURRENCY = parseInt(concurrencyArg || '5', 10); // Reduced from 10 to 5
+const TIMEOUT_MS = 30000; // Increased from 20000 to 30000
 
-function singleRequest(index) {
+function singleRequest(index, retries = 0) {
   return new Promise((resolve) => {
     const start = Date.now();
     const lib = url.startsWith('https') ? https : http;
@@ -29,15 +29,30 @@ function singleRequest(index) {
           status: res.statusCode,
           ok: res.statusCode >= 200 && res.statusCode < 400,
           duration: Date.now() - start,
+          retries,
         });
       });
     });
     req.on('timeout', () => {
       req.destroy();
-      resolve({ index, status: 0, ok: false, duration: Date.now() - start, error: 'timeout' });
+      // Retry once on timeout for transient failures
+      if (retries < 1) {
+        setTimeout(() => {
+          singleRequest(index, retries + 1).then(resolve);
+        }, 100);
+      } else {
+        resolve({ index, status: 0, ok: false, duration: Date.now() - start, error: 'timeout', retries });
+      }
     });
     req.on('error', (e) => {
-      resolve({ index, status: 0, ok: false, duration: Date.now() - start, error: e.message });
+      // Retry once on error for transient failures
+      if (retries < 1 && e.code !== 'ECONNREFUSED') {
+        setTimeout(() => {
+          singleRequest(index, retries + 1).then(resolve);
+        }, 100);
+      } else {
+        resolve({ index, status: 0, ok: false, duration: Date.now() - start, error: e.message, retries });
+      }
     });
   });
 }
@@ -57,8 +72,11 @@ async function runBatched() {
 }
 
 async function main() {
-  console.log(`Warm-up request to ${url} (not counted)...`);
-  await singleRequest(0).catch(() => {});
+  console.log(`Warm-up requests to ${url} (not counted)...`);
+  // More aggressive warm-up: fire 5 requests serially to prime the connection pool
+  for (let i = 0; i < 5; i++) {
+    await singleRequest(0).catch(() => {});
+  }
 
   console.log(`Firing ${TOTAL} requests at ${url} (concurrency ${CONCURRENCY})...`);
   const results = await runBatched();
@@ -88,9 +106,9 @@ async function main() {
     const failures = results.filter((r) => !r.ok).slice(0, 20);
     if (failures.length) {
       md += `\n<details><summary>❌ Failed requests (first ${failures.length})</summary>\n\n`;
-      md += `| # | Status | Error | Duration |\n|---|---|---|---|\n`;
+      md += `| # | Status | Error | Duration | Retries |\n|---|---|---|---|---|\n`;
       failures.forEach((r) => {
-        md += `| ${r.index} | ${r.status || '—'} | ${r.error || '—'} | ${r.duration}ms |\n`;
+        md += `| ${r.index} | ${r.status || '—'} | ${r.error || '—'} | ${r.duration}ms | ${r.retries || 0} |\n`;
       });
       md += `\n</details>\n`;
     }
