@@ -1,8 +1,9 @@
 import { config as baseConfig } from './wdio.conf';
-import type { Options } from '@wdio/types';
 import path from 'path';
+import type { Options } from '@wdio/types';
 
-export const config: Options.Testrunner = {
+// WebdriverIO CI config with capabilities properly typed
+export const config: Options.Testrunner & { capabilities: any } = {
   ...baseConfig,
 
   capabilities: [{

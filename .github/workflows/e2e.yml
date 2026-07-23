@@ -96,7 +96,7 @@ jobs:
 
       - name: Install Appium framework dependencies
         working-directory: mobile-app/appium-tests
-        run: npm install
+        run: npm install --legacy-peer-deps
 
       - name: Type-check Appium specs (real compile check)
         id: typecheck
