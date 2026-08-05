@@ -13,8 +13,9 @@ export class RegistrationPage extends BasePage {
   async fillBuyerRegistration(name: string, email?: string): Promise<void> {
     logger.info('Filling buyer registration');
     const inputs = await $$('android=new UiSelector().className("android.widget.EditText")');
-    if (inputs.length > 0) { await inputs[0].clearValue(); await inputs[0].setValue(name); }
-    if (email && inputs.length > 1) { await inputs[1].clearValue(); await inputs[1].setValue(email); }
+    const inputCount = await inputs.length;
+    if (inputCount > 0) { await inputs[0].clearValue(); await inputs[0].setValue(name); }
+    if (email && inputCount > 1) { await inputs[1].clearValue(); await inputs[1].setValue(email); }
     await this.hideKeyboard();
   }
 
@@ -22,7 +23,8 @@ export class RegistrationPage extends BasePage {
     logger.info('Filling farmer registration');
     const inputs = await $$('android=new UiSelector().className("android.widget.EditText")');
     const values = [name, farmName, location, acres];
-    for (let i = 0; i < Math.min(inputs.length, values.length); i++) {
+    const inputCount = await inputs.length;
+    for (let i = 0; i < Math.min(inputCount, values.length); i++) {
       await inputs[i].clearValue();
       await inputs[i].setValue(values[i]);
       await this.sleep(200);
@@ -34,7 +36,8 @@ export class RegistrationPage extends BasePage {
     logger.info('Filling delivery registration');
     const inputs = await $$('android=new UiSelector().className("android.widget.EditText")');
     const values = [name, vehicleType, licenseNo];
-    for (let i = 0; i < Math.min(inputs.length, values.length); i++) {
+    const inputCount = await inputs.length;
+    for (let i = 0; i < Math.min(inputCount, values.length); i++) {
       await inputs[i].clearValue();
       await inputs[i].setValue(values[i]);
       await this.sleep(200);

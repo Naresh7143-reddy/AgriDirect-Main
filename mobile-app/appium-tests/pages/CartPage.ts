@@ -36,8 +36,11 @@ export class CartPage extends BasePage {
   async tapCheckout(): Promise<void> {
     logger.info('Proceeding to checkout');
     await this.scrollDown();
-    await this.tapByTextContaining('Checkout') ||
-    await this.tapByTextContaining('Proceed');
+    try {
+      await this.tapByTextContaining('Checkout');
+    } catch {
+      await this.tapByTextContaining('Proceed');
+    }
     await this.sleep(1500);
   }
 

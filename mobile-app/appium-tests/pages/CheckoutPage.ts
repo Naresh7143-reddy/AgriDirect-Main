@@ -35,7 +35,8 @@ export class CheckoutPage extends BasePage {
     logger.info('Entering delivery address');
     const inputs = await $$('android=new UiSelector().className("android.widget.EditText")');
     const values = [address.line1, address.city, address.state, address.pincode];
-    for (let i = 0; i < Math.min(inputs.length, values.length); i++) {
+    const inputCount = await inputs.length;
+    for (let i = 0; i < Math.min(inputCount, values.length); i++) {
       await inputs[i].clearValue();
       await inputs[i].setValue(values[i]);
       await this.sleep(200);
@@ -46,9 +47,15 @@ export class CheckoutPage extends BasePage {
   async tapPlaceOrder(): Promise<void> {
     logger.info('Placing order');
     await this.scrollDown();
-    await this.tapByTextContaining('Place Order') ||
-    await this.tapByTextContaining('Confirm Order') ||
-    await this.tapByTextContaining('Pay');
+    try {
+      await this.tapByTextContaining('Place Order');
+    } catch {
+      try {
+        await this.tapByTextContaining('Confirm Order');
+      } catch {
+        await this.tapByTextContaining('Pay');
+      }
+    }
     await this.sleep(5000); // Allow time for payment/API
   }
 
@@ -69,8 +76,11 @@ export class CheckoutPage extends BasePage {
   }
 
   async tapAddAddress(): Promise<void> {
-    await this.tapByTextContaining('Add Address') ||
-    await this.tapByTextContaining('Add New');
+    try {
+      await this.tapByTextContaining('Add Address');
+    } catch {
+      await this.tapByTextContaining('Add New');
+    }
     await this.sleep(1000);
   }
 }

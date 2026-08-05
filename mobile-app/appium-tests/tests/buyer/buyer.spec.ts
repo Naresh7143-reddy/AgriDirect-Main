@@ -70,7 +70,8 @@ describe('🛒 Buyer Module Tests', () => {
       try {
         // Tap first product in list
         const products = await $$('android=new UiSelector().className("android.view.ViewGroup").clickable(true)');
-        if (products.length > 1) {
+        const count = await products.length;
+        if (count > 1) {
           await products[1].click();
           await browser.pause(APP_CONFIG.animationWait);
           await takeStepScreenshot('product_detail_opened');

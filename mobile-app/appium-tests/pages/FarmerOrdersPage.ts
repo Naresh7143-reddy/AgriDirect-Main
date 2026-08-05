@@ -14,7 +14,7 @@ export class FarmerOrdersPage extends BasePage {
     logger.info('Tapping first order');
     try {
       const orders = await $$('android=new UiSelector().textContains("ORD-")');
-      if (orders.length > 0) await orders[0].click();
+      if ((await orders.length) > 0) await orders[0].click();
     } catch {
       await this.tapByTextContaining('ORD-');
     }
@@ -23,13 +23,25 @@ export class FarmerOrdersPage extends BasePage {
 
   async tapAcceptOrder(): Promise<void> {
     logger.info('Accepting order');
-    await this.tapByText('Accept') || await this.tapByTextContaining('Accept Order');
+    try {
+      await this.tapByText('Accept');
+    } catch {
+      await this.tapByTextContaining('Accept Order');
+    }
     await this.sleep(2000);
   }
 
   async tapPackOrder(): Promise<void> {
     logger.info('Marking as packed');
-    await this.tapByText('Pack') || await this.tapByTextContaining('Mark as Packed') || await this.tapByTextContaining('Packed');
+    try {
+      await this.tapByText('Pack');
+    } catch {
+      try {
+        await this.tapByTextContaining('Mark as Packed');
+      } catch {
+        await this.tapByTextContaining('Packed');
+      }
+    }
     await this.sleep(2000);
   }
 

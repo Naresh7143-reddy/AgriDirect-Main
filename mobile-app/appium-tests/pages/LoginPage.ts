@@ -54,12 +54,13 @@ export class LoginPage extends BasePage {
     await this.sleep(2000);
     // OTP inputs — either individual boxes or a single field
     const inputs = await $$('android=new UiSelector().className("android.widget.EditText")');
-    if (inputs.length >= 6) {
+    const inputCount = await inputs.length;
+    if (inputCount >= 6) {
       for (let i = 0; i < 6; i++) {
         await inputs[i].setValue(otp[i]);
         await this.sleep(100);
       }
-    } else if (inputs.length > 0) {
+    } else if (inputCount > 0) {
       await inputs[0].clearValue();
       await inputs[0].setValue(otp);
     }

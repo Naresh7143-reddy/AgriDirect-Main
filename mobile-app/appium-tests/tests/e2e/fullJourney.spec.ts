@@ -127,7 +127,8 @@ describe('🌐 Full End-to-End Journey', () => {
       const productDetail = new ProductDetailPage();
       try {
         const items = await $$('android=new UiSelector().className("android.view.ViewGroup").clickable(true)');
-        if (items.length > 0) {
+        const itemCount = await items.length;
+        if (itemCount > 0) {
           await items[0].click();
           await browser.pause(APP_CONFIG.animationWait);
           const loaded = await productDetail.isLoaded();

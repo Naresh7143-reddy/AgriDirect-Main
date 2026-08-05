@@ -66,9 +66,15 @@ export class ProductDetailPage extends BasePage {
 
   async tapGoToCart(): Promise<void> {
     logger.info('Going to cart');
-    await this.tapByTextContaining('Go to Cart') ||
-    await this.tapByTextContaining('View Cart') ||
-    await this.tapByText('Cart');
+    try {
+      await this.tapByTextContaining('Go to Cart');
+    } catch {
+      try {
+        await this.tapByTextContaining('View Cart');
+      } catch {
+        await this.tapByText('Cart');
+      }
+    }
     await this.sleep(1000);
   }
 

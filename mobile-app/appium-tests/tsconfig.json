@@ -17,7 +17,7 @@
       "@data/*": ["test-data/*"],
       "@config/*": ["config/*"]
     },
-    "types": ["node", "mocha", "@wdio/globals/types", "@types/webdriverio", "puppeteer-core"],
+    "types": ["node", "mocha"],
     "typeRoots": ["./node_modules/@types"]
   },
   "include": ["**/*.ts"],

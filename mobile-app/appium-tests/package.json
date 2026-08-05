@@ -45,7 +45,6 @@
     "@types/mocha": "^10.0.6",
     "@types/node": "^20.11.0",
     "@types/uuid": "^9.0.7",
-    "@types/webdriverio": "^9.0.0",
     "puppeteer-core": "^21.6.0"
   }
 }

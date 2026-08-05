@@ -20,8 +20,10 @@ export class DeliveryHomePage extends BasePage {
   async claimFirstOrder(): Promise<void> {
     logger.info('Claiming first order');
     try {
-      await this.tapByText('Claim') || await this.tapByTextContaining('Accept');
-    } catch { /* ignore */ }
+      await this.tapByText('Claim');
+    } catch {
+      try { await this.tapByTextContaining('Accept'); } catch { /* ignore */ }
+    }
     await this.sleep(2000);
   }
 
@@ -33,14 +35,21 @@ export class DeliveryHomePage extends BasePage {
 
   async tapPickedUp(): Promise<void> {
     logger.info('Marking as picked up');
-    await this.tapByTextContaining('Picked Up') ||
-    await this.tapByTextContaining('Pick Up');
+    try {
+      await this.tapByTextContaining('Picked Up');
+    } catch {
+      await this.tapByTextContaining('Pick Up');
+    }
     await this.sleep(2000);
   }
 
   async tapDelivered(): Promise<void> {
     logger.info('Marking as delivered');
-    await this.tapByText('Delivered') || await this.tapByTextContaining('Mark Delivered');
+    try {
+      await this.tapByText('Delivered');
+    } catch {
+      await this.tapByTextContaining('Mark Delivered');
+    }
     await this.sleep(2000);
   }
 
@@ -58,7 +67,11 @@ export class DeliveryHomePage extends BasePage {
   }
 
   async tapDeliveries(): Promise<void> {
-    await this.tapByText('Deliveries') || await this.tapByText('History');
+    try {
+      await this.tapByText('Deliveries');
+    } catch {
+      await this.tapByText('History');
+    }
     await this.sleep(1000);
   }
 }
