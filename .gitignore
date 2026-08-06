@@ -13,3 +13,9 @@ firebase-service-account.json
 *.pem
 .idea/
 .vscode/
+
+# Test reports
+**/reports/*.docx
+**/reports/word_reports/
+**/reports/*.json
+

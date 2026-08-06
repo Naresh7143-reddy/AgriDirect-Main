@@ -70,12 +70,19 @@ jobs:
             web-app/reports/pytest-results.xml \
             "🌐 Selenium — Website Tests" \
             web-app/reports/selenium-detail.json
+          pip install python-docx
+          python .github/scripts/json_to_docx.py \
+            web-app/reports/selenium-detail.json \
+            "Selenium Website Tests" \
+            web-app/reports/Selenium_Website_Test_Report.docx
 
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: selenium-web-report
-          path: web-app/reports/
+          path: |
+            web-app/reports/*.docx
+            web-app/reports/*.json
           retention-days: 30
           if-no-files-found: ignore
 
@@ -109,10 +116,12 @@ jobs:
           fi
         continue-on-error: true
 
-      - name: Summarize results (catalog only — requires a real device)
+      - name: Summarize results & Generate Word Reports
         id: summarize
         if: always()
         run: |
+          pip install python-docx
+          python .github/scripts/generate_appium_word_reports.py mobile-app/appium-tests/reports/
           TC_RESULT="${{ steps.typecheck.outputs.result }}"
           {
             echo "## 🤖 Appium — Android Tests"
@@ -125,17 +134,17 @@ jobs:
             echo ""
             echo "TypeScript compile check: **$TC_RESULT**"
             echo ""
-            echo "| Spec file | Real test cases |"
-            echo "|---|---|"
-            echo "| auth/login.spec.ts | 11 |"
-            echo "| buyer/buyer.spec.ts | 16 |"
-            echo "| buyer/buyer.extended.spec.ts | 60 |"
-            echo "| farmer/farmer.spec.ts | 16 |"
-            echo "| farmer/farmer.extended.spec.ts | 50 |"
-            echo "| delivery/delivery.spec.ts | 11 |"
-            echo "| delivery/delivery.extended.spec.ts | 20 |"
-            echo "| e2e/fullJourney.spec.ts | 18 |"
-            echo "| **Total** | **202** |"
+            echo "| Spec file | Real test cases | Downloadable Word Report |"
+            echo "|---|---|---|"
+            echo "| auth/login.spec.ts | 11 | 📄 01_Auth_Login_Tests.docx |"
+            echo "| buyer/buyer.spec.ts | 16 | 📄 02_Buyer_Module_Tests.docx |"
+            echo "| buyer/buyer.extended.spec.ts | 60 | 📄 03_Buyer_Extended_Tests.docx |"
+            echo "| farmer/farmer.spec.ts | 16 | 📄 04_Farmer_Module_Tests.docx |"
+            echo "| farmer/farmer.extended.spec.ts | 50 | 📄 05_Farmer_Extended_Tests.docx |"
+            echo "| delivery/delivery.spec.ts | 11 | 📄 06_Delivery_Module_Tests.docx |"
+            echo "| delivery/delivery.extended.spec.ts | 20 | 📄 07_Delivery_Extended_Tests.docx |"
+            echo "| e2e/fullJourney.spec.ts | 18 | 📄 08_E2E_Full_Journey_Tests.docx |"
+            echo "| **Total** | **202** | 📄 **AgriDirect_Appium_Master_Test_Report.docx** |"
           } >> $GITHUB_STEP_SUMMARY
           echo "total=202" >> $GITHUB_OUTPUT
           echo "passed=0" >> $GITHUB_OUTPUT
@@ -145,9 +154,11 @@ jobs:
         if: always()
         with:
           name: appium-android-report
-          path: mobile-app/appium-tests/reports/
+          path: |
+            mobile-app/appium-tests/reports/*.docx
+            mobile-app/appium-tests/reports/word_reports/*.docx
           retention-days: 30
-          if-no-files-found: ignore
+          if-no-files-found: warn
 
   # ───────────────────────────────────────────────────────────────────────────
   unit-tests-api:
@@ -173,7 +184,7 @@ jobs:
         run: chmod +x mvnw && ./mvnw -B test
         continue-on-error: true
 
-      - name: Summarize results
+      - name: Summarize results & Generate Word Report
         id: summarize
         if: always()
         run: |
@@ -182,13 +193,20 @@ jobs:
             "backend/target/surefire-reports/*.xml" \
             "☕ Unit Tests — API" \
             artifacts/unit-tests-api-detail.json
+          pip install python-docx
+          python3 .github/scripts/json_to_docx.py \
+            artifacts/unit-tests-api-detail.json \
+            "Unit Tests - API" \
+            artifacts/Unit_Tests_API_Report.docx || true
           cp -r backend/target/surefire-reports artifacts/ 2>/dev/null || true
 
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: unit-tests-api-report
-          path: artifacts/
+          path: |
+            artifacts/*.docx
+            artifacts/*.json
           retention-days: 30
           if-no-files-found: ignore
 
@@ -245,6 +263,19 @@ jobs:
             "✅ Validation Tests — Jest (mobile-app)" \
             mobile-app/jest-detail.json
 
+      - name: Generate Word Reports for Validation Tests
+        if: always()
+        run: |
+          pip install python-docx
+          python3 .github/scripts/json_to_docx.py \
+            web-app/reports/vitest-detail.json \
+            "Validation Tests - Vitest (Web App)" \
+            web-app/reports/Vitest_Validation_Test_Report.docx || true
+          python3 .github/scripts/json_to_docx.py \
+            mobile-app/jest-detail.json \
+            "Validation Tests - Jest (Mobile App)" \
+            mobile-app/Jest_Validation_Test_Report.docx || true
+
       - name: Combine totals
         id: summarize
         if: always()
@@ -266,6 +297,8 @@ jobs:
         with:
           name: validation-tests-report
           path: |
+            web-app/reports/*.docx
+            mobile-app/*.docx
             web-app/reports/vitest-results.json
             web-app/reports/vitest-detail.json
             mobile-app/jest-results.json
@@ -331,12 +364,19 @@ jobs:
             300 \
             5 \
             load-testing-detail.json
+          pip install python-docx
+          python3 .github/scripts/json_to_docx.py \
+            load-testing-detail.json \
+            "Load Testing - Performance" \
+            Load_Testing_Performance_Report.docx || true
 
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: load-testing-report
-          path: load-testing-detail.json
+          path: |
+            Load_Testing_Performance_Report.docx
+            load-testing-detail.json
           retention-days: 30
           if-no-files-found: ignore
 

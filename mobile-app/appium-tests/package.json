@@ -13,7 +13,8 @@
     "report:html": "ts-node utilities/generateHtmlReport.ts",
     "report:excel": "ts-node utilities/generateExcelReport.ts",
     "report:pdf": "ts-node utilities/generatePdfReport.ts",
-    "report:all": "npm run report:html && npm run report:excel && npm run report:pdf"
+    "report:word": "py ../../.github/scripts/generate_appium_word_reports.py",
+    "report:all": "npm run report:word && npm run report:html && npm run report:excel && npm run report:pdf"
   },
   "dependencies": {
     "webdriverio": "^9.0.0",
