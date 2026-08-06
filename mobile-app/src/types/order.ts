@@ -118,3 +118,16 @@ export interface RateOrderRequest {
   review?: string;
   productId?: string;
 }
+
+export interface AgentLocationResponse {
+  available: boolean;
+  lat: number;
+  lng: number;
+  status: string;
+  agentName?: string;
+  agentPhone?: string;
+  vehicleType?: string;
+  vehicleRegistration?: string;
+  rating?: number;
+  totalDeliveries?: number;
+}

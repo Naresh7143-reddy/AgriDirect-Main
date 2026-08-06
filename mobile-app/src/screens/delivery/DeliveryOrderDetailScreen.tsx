@@ -1,11 +1,12 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import {
-  ActivityIndicator, Alert, Linking, ScrollView,
+  ActivityIndicator, Alert, Linking, Platform, ScrollView,
   StyleSheet, Text, TouchableOpacity, View,
 } from 'react-native';
 import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import Icon from 'react-native-vector-icons/Ionicons';
+import MapView, { Marker, Polyline, PROVIDER_GOOGLE } from 'react-native-maps';
 import { Colors } from '../../theme/colors';
 import { borderRadius, shadow, spacing } from '../../theme/spacing';
 import { deliveryApi } from '../../api/delivery';
@@ -97,6 +98,77 @@ export default function DeliveryOrderDetailScreen() {
           </View>
         </View>
 
+        {/* Route Map Preview */}
+        {(order.pickupLat || order.dropLat) && (
+          <View style={s.card}>
+            <Text style={s.sectionTitle}>Route</Text>
+            <View style={s.mapWrap}>
+              <MapView
+                provider={PROVIDER_GOOGLE}
+                style={s.mapPreview}
+                scrollEnabled={false}
+                zoomEnabled={false}
+                rotateEnabled={false}
+                pitchEnabled={false}
+                initialRegion={{
+                  latitude: ((order.pickupLat || 17.4) + (order.dropLat || 17.4)) / 2,
+                  longitude: ((order.pickupLng || 78.4) + (order.dropLng || 78.4)) / 2,
+                  latitudeDelta: Math.abs((order.pickupLat || 17.4) - (order.dropLat || 17.4)) * 2 + 0.02,
+                  longitudeDelta: Math.abs((order.pickupLng || 78.4) - (order.dropLng || 78.4)) * 2 + 0.02,
+                }}
+              >
+                {order.pickupLat && order.pickupLng && (
+                  <Marker
+                    coordinate={{ latitude: order.pickupLat, longitude: order.pickupLng }}
+                    title="Farm (Pickup)"
+                    pinColor={Colors.warning}
+                  />
+                )}
+                {order.dropLat && order.dropLng && (
+                  <Marker
+                    coordinate={{ latitude: order.dropLat, longitude: order.dropLng }}
+                    title="Buyer (Drop)"
+                    pinColor={Colors.primary}
+                  />
+                )}
+                {order.pickupLat && order.dropLat && (
+                  <Polyline
+                    coordinates={[
+                      { latitude: order.pickupLat!, longitude: order.pickupLng! },
+                      { latitude: order.dropLat!, longitude: order.dropLng! },
+                    ]}
+                    strokeColor={Colors.primary}
+                    strokeWidth={3}
+                    lineDashPattern={[1]}
+                  />
+                )}
+              </MapView>
+            </View>
+            <TouchableOpacity
+              style={s.openMapsBtn}
+              onPress={() => {
+                const lat = order.status === 'assigned' ? order.pickupLat : order.dropLat;
+                const lng = order.status === 'assigned' ? order.pickupLng : order.dropLng;
+                if (lat && lng) {
+                  const url = Platform.select({
+                    ios: `comgooglemaps://?daddr=${lat},${lng}&directionsmode=driving`,
+                    android: `google.navigation:q=${lat},${lng}&mode=d`,
+                  });
+                  const fallback = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}&travelmode=driving`;
+                  if (url) {
+                    Linking.canOpenURL(url)
+                      .then(ok => ok ? Linking.openURL(url) : Linking.openURL(fallback))
+                      .catch(() => Linking.openURL(fallback));
+                  }
+                }
+              }}
+            >
+              <Icon name="navigate" size={16} color={Colors.white} />
+              <Text style={s.openMapsText}>Open in Google Maps</Text>
+            </TouchableOpacity>
+          </View>
+        )}
+
         {/* Pickup */}
         <View style={s.card}>
           <View style={s.rowBetween}>
@@ -187,4 +259,8 @@ const s = StyleSheet.create({
   actionBtn:{flexDirection:'row',alignItems:'center',justifyContent:'center',gap:8,borderRadius:borderRadius.lg,padding:spacing.base},
   actionText:{color:Colors.white,fontWeight:'700',fontSize:16},
   disabledBtn:{opacity:0.6},
+  mapWrap:{height:160,borderRadius:borderRadius.md,overflow:'hidden',marginBottom:10},
+  mapPreview:{flex:1},
+  openMapsBtn:{flexDirection:'row',alignItems:'center',justifyContent:'center',gap:6,backgroundColor:Colors.primary,borderRadius:borderRadius.md,paddingVertical:10},
+  openMapsText:{color:Colors.white,fontWeight:'700',fontSize:13},
 });

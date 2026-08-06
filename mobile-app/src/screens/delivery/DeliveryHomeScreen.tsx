@@ -7,6 +7,7 @@ import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/Ionicons';
+import MapView, { Marker, Polyline, PROVIDER_GOOGLE } from 'react-native-maps';
 import { Colors } from '../../theme/colors';
 import { shadow, borderRadius, spacing } from '../../theme/spacing';
 import { deliveryApi } from '../../api/delivery';
@@ -248,15 +249,67 @@ export const DeliveryHomeScreen: React.FC = () => {
                 </View>
               </View>
 
-              {/* Status action */}
+              {/* Mini Map Preview */}
+              {(activeDelivery.pickupLat || activeDelivery.dropLat) && (
+                <View style={styles.miniMapWrap}>
+                  <MapView
+                    provider={PROVIDER_GOOGLE}
+                    style={styles.miniMap}
+                    scrollEnabled={false}
+                    zoomEnabled={false}
+                    rotateEnabled={false}
+                    pitchEnabled={false}
+                    initialRegion={{
+                      latitude: activeDelivery.pickupLat || activeDelivery.dropLat || 17.4,
+                      longitude: activeDelivery.pickupLng || activeDelivery.dropLng || 78.4,
+                      latitudeDelta: 0.06,
+                      longitudeDelta: 0.06,
+                    }}
+                  >
+                    {activeDelivery.pickupLat && activeDelivery.pickupLng && (
+                      <Marker coordinate={{ latitude: activeDelivery.pickupLat, longitude: activeDelivery.pickupLng }} pinColor={Colors.warning} />
+                    )}
+                    {activeDelivery.dropLat && activeDelivery.dropLng && (
+                      <Marker coordinate={{ latitude: activeDelivery.dropLat, longitude: activeDelivery.dropLng }} pinColor={Colors.primary} />
+                    )}
+                    {activeDelivery.pickupLat && activeDelivery.dropLat && (
+                      <Polyline
+                        coordinates={[
+                          { latitude: activeDelivery.pickupLat!, longitude: activeDelivery.pickupLng! },
+                          { latitude: activeDelivery.dropLat!, longitude: activeDelivery.dropLng! },
+                        ]}
+                        strokeColor={Colors.white}
+                        strokeWidth={3}
+                        lineDashPattern={[1]}
+                      />
+                    )}
+                  </MapView>
+                </View>
+              )}
+
+              {/* Status action + Navigate */}
               <View style={{ flexDirection: 'row', gap: 10, marginTop: 14 }}>
+                {/* Navigate button — always visible */}
+                <TouchableOpacity
+                  style={[styles.actionBtn, { backgroundColor: 'rgba(255,255,255,0.25)', borderWidth: 1, borderColor: 'rgba(255,255,255,0.6)' }]}
+                  onPress={() => navigation.navigate('DeliveryNavigation', {
+                    orderId: activeDelivery.id || (activeDelivery as any).orderId,
+                    pickupLat: activeDelivery.pickupLat ?? 0,
+                    pickupLng: activeDelivery.pickupLng ?? 0,
+                    dropLat: activeDelivery.dropLat ?? 0,
+                    dropLng: activeDelivery.dropLng ?? 0,
+                  })}
+                >
+                  <Text style={styles.actionBtnText}>🗺️ Navigate</Text>
+                </TouchableOpacity>
+
                 {activeDelivery.status === 'assigned' && (
                   <TouchableOpacity
                     style={styles.actionBtn}
                     onPress={() => updateStatus(activeDelivery.id || (activeDelivery as any).orderId, 'PICKED_UP', 'Picked Up')}
                     disabled={updatingId === activeDelivery.id}
                   >
-                    {updatingId === activeDelivery.id ? <ActivityIndicator color={Colors.white} size="small" /> : <Text style={styles.actionBtnText}>📦 Mark Picked Up</Text>}
+                    {updatingId === activeDelivery.id ? <ActivityIndicator color={Colors.white} size="small" /> : <Text style={styles.actionBtnText}>📦 Picked Up</Text>}
                   </TouchableOpacity>
                 )}
                 {(activeDelivery.status === 'picked_up' || activeDelivery.status === 'in_transit') && (
@@ -265,7 +318,7 @@ export const DeliveryHomeScreen: React.FC = () => {
                     onPress={() => updateStatus(activeDelivery.id || (activeDelivery as any).orderId, 'DELIVERED', 'Delivered')}
                     disabled={updatingId === activeDelivery.id}
                   >
-                    {updatingId === activeDelivery.id ? <ActivityIndicator color={Colors.white} size="small" /> : <Text style={styles.actionBtnText}>✅ Mark Delivered</Text>}
+                    {updatingId === activeDelivery.id ? <ActivityIndicator color={Colors.white} size="small" /> : <Text style={styles.actionBtnText}>✅ Delivered</Text>}
                   </TouchableOpacity>
                 )}
               </View>
@@ -389,4 +442,6 @@ const styles = StyleSheet.create({
   metaChip: { backgroundColor: Colors.background, borderRadius: borderRadius.full, paddingHorizontal: 10, paddingVertical: 3, fontSize: 11, color: Colors.textSecondary, fontWeight: '600' },
   claimBtn: { backgroundColor: Colors.primary, borderRadius: borderRadius.lg, paddingVertical: 12, alignItems: 'center', marginTop: 4 },
   claimBtnText: { color: Colors.white, fontWeight: '700', fontSize: 15 },
+  miniMapWrap: { height: 100, borderRadius: borderRadius.md, overflow: 'hidden', marginTop: 10, borderWidth: 1, borderColor: 'rgba(255,255,255,0.3)' },
+  miniMap: { flex: 1 },
 });
