@@ -79,6 +79,7 @@ export interface Order {
   estimatedDelivery?: string;
   deliveredAt?: string;
   couponCode?: string;
+  requiredVehicleType?: string;
   createdAt: string;
   updatedAt: string;
 }
@@ -106,6 +107,7 @@ export interface PlaceOrderRequest {
   paymentMethod: 'RAZORPAY' | 'COD';
   couponCode?: string;
   notes?: string;
+  requiredVehicleType?: string;
 }
 
 export interface UpdateOrderStatusRequest {
