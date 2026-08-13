@@ -395,6 +395,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Generate comprehensive test case inventory Excel
+        run: |
+          pip install openpyxl
+          python3 .github/scripts/generate_test_inventory_excel.py "artifacts/AgriDirect_Test_Case_Inventory.xlsx"
+
       - name: Download all reports
         uses: actions/download-artifact@v4
         with:
@@ -511,3 +516,11 @@ jobs:
         uses: actions/deploy-pages@v4
         with:
           artifact_name: github-pages-${{ github.run_id }}-${{ github.run_attempt }}
+
+      - name: Upload test case inventory Excel
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-case-inventory
+          path: artifacts/AgriDirect_Test_Case_Inventory.xlsx
+          retention-days: 90
