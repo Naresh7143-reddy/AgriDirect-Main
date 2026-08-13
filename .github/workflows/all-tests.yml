@@ -68,6 +68,14 @@ jobs:
             backend/target/site/jacoco/
           retention-days: 30
 
+      - name: Upload Unit Testing Excel (300+ cases)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: unit-testing-excel-300-cases
+          path: test-cases-excel/test-cases-excel/unit_testing_cases.xlsx
+          retention-days: 30
+
   # ============================================================================
   # VALIDATION TESTING - 300+ Test Cases
   # ============================================================================
@@ -165,6 +173,14 @@ jobs:
           path: validation-report.md
           retention-days: 30
 
+      - name: Upload Validation Testing Excel (300+ cases)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: validation-testing-excel-300-cases
+          path: test-cases-excel/test-cases-excel/validation_testing_cases.xlsx
+          retention-days: 30
+
   # ============================================================================
   # LOAD TESTING - 300+ Test Cases
   # ============================================================================
@@ -217,6 +233,14 @@ jobs:
         with:
           name: load-tests-report
           path: load-test-report.md
+          retention-days: 30
+
+      - name: Upload Load Testing Excel (300+ cases)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: load-testing-excel-300-cases
+          path: test-cases-excel/test-cases-excel/load_testing_cases.xlsx
           retention-days: 30
 
   # ============================================================================
@@ -276,6 +300,14 @@ jobs:
           path: selenium-test-report.md
           retention-days: 30
 
+      - name: Upload Selenium Testing Excel (300+ cases)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: selenium-testing-excel-300-cases
+          path: test-cases-excel/test-cases-excel/selenium_web_test_cases.xlsx
+          retention-days: 30
+
   # ============================================================================
   # APPIUM TESTING - 300+ Test Cases
   # ============================================================================
@@ -323,6 +355,14 @@ jobs:
         with:
           name: appium-tests-report
           path: appium-test-report.md
+          retention-days: 30
+
+      - name: Upload Appium Testing Excel (300+ cases)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: appium-testing-excel-300-cases
+          path: test-cases-excel/test-cases-excel/appium_mobile_test_cases.xlsx
           retention-days: 30
 
   # ============================================================================
@@ -459,5 +499,21 @@ jobs:
         with:
           name: final-comprehensive-report
           path: COMPREHENSIVE_TEST_REPORT.md
+          retention-days: 30
+
+      - name: Upload UI/UX Testing Excel (300+ cases)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ui-ux-testing-excel-300-cases
+          path: test-cases-excel/test-cases-excel/ui_ux_test_cases.xlsx
+          retention-days: 30
+
+      - name: Upload ALL Test Excel Files (1500+ cases)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: all-test-cases-excel-files-1500-plus
+          path: test-cases-excel/test-cases-excel/*.xlsx
           retention-days: 30
 
