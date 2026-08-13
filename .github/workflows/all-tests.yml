@@ -47,7 +47,7 @@ jobs:
         if: always()
         run: |
           pip install openpyxl
-          python .github/scripts/generate_all_test_excels.py
+          python .github/scripts/generate_test_excels_from_real_data.py
 
       - name: Upload Unit Testing Excel
         if: always()
@@ -81,7 +81,7 @@ jobs:
         if: always()
         run: |
           pip install openpyxl
-          python .github/scripts/generate_all_test_excels.py
+          python .github/scripts/generate_test_excels_from_real_data.py
 
       - name: Upload Validation Testing Excel
         if: always()
@@ -119,7 +119,7 @@ jobs:
         if: always()
         run: |
           pip install openpyxl
-          python .github/scripts/generate_all_test_excels.py
+          python .github/scripts/generate_test_excels_from_real_data.py
 
       - name: Upload Load Testing Excel
         if: always()
@@ -157,7 +157,7 @@ jobs:
         if: always()
         run: |
           pip install openpyxl
-          python .github/scripts/generate_all_test_excels.py
+          python .github/scripts/generate_test_excels_from_real_data.py
 
       - name: Upload Selenium Testing Excel
         if: always()
@@ -195,7 +195,7 @@ jobs:
         if: always()
         run: |
           pip install openpyxl
-          python .github/scripts/generate_all_test_excels.py
+          python .github/scripts/generate_test_excels_from_real_data.py
 
       - name: Upload Appium Testing Excel
         if: always()
@@ -229,7 +229,7 @@ jobs:
         if: always()
         run: |
           pip install openpyxl
-          python .github/scripts/generate_all_test_excels.py
+          python .github/scripts/generate_test_excels_from_real_data.py
 
       - name: Upload UI/UX Testing Excel
         if: always()

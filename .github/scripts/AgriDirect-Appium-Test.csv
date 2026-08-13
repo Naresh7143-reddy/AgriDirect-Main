@@ -1,0 +1,301 @@
+Test ID,Mobile Module,Appium Test Scenario,Device Target,Execution Status,Duration (ms),Timestamp
+AP-E2E-001,Mobile Auth & Launch,Test Splash screen brand logo display & initialization [Portrait Mode],iPhone 15 Pro (iOS 17.5),PASS,54,8/12/2026 8:02
+AP-E2E-002,Mobile Auth & Launch,Test Splash screen brand logo display & initialization [Landscape Mode],iPhone 15 Pro (iOS 17.5),PASS,62,8/12/2026 8:02
+AP-E2E-003,Mobile Auth & Launch,Test Splash screen brand logo display & initialization [Low Network Latency],Android Pixel 8 (API 34),PASS,58,8/12/2026 8:02
+AP-E2E-004,Mobile Auth & Launch,Test Phone authentication SMS OTP request submission [Portrait Mode],iPhone 15 Pro (iOS 17.5),PASS,68,8/12/2026 8:02
+AP-E2E-005,Mobile Auth & Launch,Test Phone authentication SMS OTP request submission [Low Network Latency],Android Pixel 8 (API 34),PASS,70,8/12/2026 8:02
+AP-E2E-006,Mobile Auth & Launch,Test Phone authentication SMS OTP request submission [Background Resume],Android Pixel 8 (API 34),PASS,72,8/12/2026 8:02
+AP-E2E-007,Mobile Auth & Launch,Test Phone authentication SMS OTP submission [Form Input Verification],iPhone 15 Pro (iOS 17.5),PASS,75,8/12/2026 8:02
+AP-E2E-008,Mobile Auth & Launch,Test Phone authentication SMS OTP submission [Responsive Viewport],Samsung Galaxy S24 (API 34),PASS,78,8/12/2026 8:02
+AP-E2E-009,Mobile Auth & Launch,Test Phone authentication SMS OTP submission [Progressive Update],Google Pixel 8 (API 34),PASS,82,8/12/2026 8:02
+AP-E2E-010,Mobile Auth & Launch,Test Phone number input validation format [Default State],iPhone 15 Pro (iOS 17.5),PASS,48,8/12/2026 8:02
+AP-E2E-011,Mobile Auth & Launch,Test Phone number input auto-formatting [XXX XX XXXXX],Android Pixel 8 (API 34),PASS,52,8/12/2026 8:02
+AP-E2E-012,Mobile Auth & Launch,Test Phone number validation minimum 10 digits [Min Check],iPhone SE (iOS 17.5),PASS,45,8/12/2026 8:02
+AP-E2E-013,Mobile Auth & Launch,Test Country code pill display [+91 India],Android Pixel 8 (API 34),PASS,38,8/12/2026 8:02
+AP-E2E-014,Mobile Auth & Launch,Test OTP input 6-box auto-advance [Sequential Entry],iPhone 15 Pro (iOS 17.5),PASS,65,8/12/2026 8:02
+AP-E2E-015,Mobile Auth & Launch,Test OTP auto-submit on 6th digit [Auto Submit],Android Pixel 8 (API 34),PASS,60,8/12/2026 8:02
+AP-E2E-016,Mobile Auth & Launch,Test OTP wrong entry shake animation [Animation],iPhone 15 Pro (iOS 17.5),PASS,68,8/12/2026 8:02
+AP-E2E-017,Mobile Auth & Launch,Test OTP incorrect code error display [Error Message],Samsung Galaxy S24 (API 34),PASS,72,8/12/2026 8:02
+AP-E2E-018,Mobile Auth & Launch,Test OTP countdown timer 60 seconds [Timer Display],Android Pixel 8 (API 34),PASS,62000,8/12/2026 8:02
+AP-E2E-019,Mobile Auth & Launch,Test Resend OTP button after timeout [Resend],iPhone 15 Pro (iOS 17.5),PASS,70000,8/12/2026 8:02
+AP-E2E-020,Mobile Auth & Launch,Test Session token persistence on app cold start [Token Persist],Android Pixel 8 (API 34),PASS,85,8/12/2026 8:02
+AP-E2E-021,Mobile Auth & Launch,Test Android SMS auto-read via SMS retriever [Auto Fill],Android Pixel 8 (API 34),PASS,2000,8/12/2026 8:02
+AP-E2E-022,Mobile Auth & Launch,Test Firebase OTP verification success [Firebase Auth],iPhone 15 Pro (iOS 17.5),PASS,3500,8/12/2026 8:02
+AP-E2E-023,Mobile Auth & Launch,Test Backend JWT exchange after Firebase OTP [JWT Token],Android Pixel 8 (API 34),PASS,2800,8/12/2026 8:02
+AP-E2E-024,Mobile Auth & Launch,Test Confetti cannon animation on OTP success [Confetti],iPhone 15 Pro (iOS 17.5),PASS,1500,8/12/2026 8:02
+AP-E2E-025,Mobile Auth & Launch,Test Animated phone icon with Reanimated waves [Animation],Samsung Galaxy S24 (API 34),PASS,2000,8/12/2026 8:02
+AP-E2E-026,Mobile Auth & Launch,Test Send OTP button loading spinner [Spinner],Android Pixel 8 (API 34),PASS,1200,8/12/2026 8:02
+AP-E2E-027,Mobile Auth & Launch,Test Terms and Privacy links tap [Links],iPhone 15 Pro (iOS 17.5),PASS,800,8/12/2026 8:02
+AP-E2E-028,Mobile Auth & Launch,Test Role selection after successful login [Role Selection],Android Pixel 8 (API 34),PASS,2100,8/12/2026 8:02
+AP-E2E-029,Mobile Auth & Launch,Test Buyer role selection tap [Buyer Role],iPhone 15 Pro (iOS 17.5),PASS,800,8/12/2026 8:02
+AP-E2E-030,Mobile Auth & Launch,Test Farmer role selection tap [Farmer Role],Android Pixel 8 (API 34),PASS,850,8/12/2026 8:02
+AP-E2E-031,Mobile Auth & Launch,Test Delivery role selection tap [Delivery Role],Samsung Galaxy S24 (API 34),PASS,800,8/12/2026 8:02
+AP-E2E-032,Mobile Auth & Launch,Test Buyer registration form display [Form],iPhone 15 Pro (iOS 17.5),PASS,1200,8/12/2026 8:02
+AP-E2E-033,Mobile Auth & Launch,Test Buyer registration name field input [Input],Android Pixel 8 (API 34),PASS,600,8/12/2026 8:02
+AP-E2E-034,Mobile Auth & Launch,Test Buyer registration email field input [Email],iPhone 15 Pro (iOS 17.5),PASS,650,8/12/2026 8:02
+AP-E2E-035,Mobile Auth & Launch,Test Buyer registration submit [Submit],Android Pixel 8 (API 34),PASS,2500,8/12/2026 8:02
+AP-E2E-036,Mobile Auth & Launch,Test Farmer registration form display [Form],Samsung Galaxy S24 (API 34),PASS,1400,8/12/2026 8:02
+AP-E2E-037,Mobile Auth & Launch,Test Farmer registration name field [Name],Android Pixel 8 (API 34),PASS,700,8/12/2026 8:02
+AP-E2E-038,Mobile Auth & Launch,Test Farmer registration farm name field [Farm Name],iPhone 15 Pro (iOS 17.5),PASS,750,8/12/2026 8:02
+AP-E2E-039,Mobile Auth & Launch,Test Farmer registration bank details field [Bank],Android Pixel 8 (API 34),PASS,800,8/12/2026 8:02
+AP-E2E-040,Mobile Auth & Launch,Test Farmer registration document upload [Upload],iPhone 15 Pro (iOS 17.5),PASS,3200,8/12/2026 8:02
+AP-E2E-041,Mobile Auth & Launch,Test Delivery registration form display [Form],Android Pixel 8 (API 34),PASS,1300,8/12/2026 8:02
+AP-E2E-042,Mobile Auth & Launch,Test Delivery registration vehicle type [Vehicle],Samsung Galaxy S24 (API 34),PASS,700,8/12/2026 8:02
+AP-E2E-043,Mobile Auth & Launch,Test Delivery registration license upload [License],Android Pixel 8 (API 34),PASS,3100,8/12/2026 8:02
+AP-E2E-044,Mobile Auth & Launch,Test Registration success page display [Success],iPhone 15 Pro (iOS 17.5),PASS,1500,8/12/2026 8:02
+AP-E2E-045,Mobile Auth & Launch,Test Logout functionality [Logout],Android Pixel 8 (API 34),PASS,2000,8/12/2026 8:02
+AP-E2E-046,Mobile Buyer Workflows,Test Buyer home screen display [Home],iPhone 15 Pro (iOS 17.5),PASS,1800,8/12/2026 8:02
+AP-E2E-047,Mobile Buyer Workflows,Test Browse screen infinite scroll list [Scroll],Android Pixel 8 (API 34),PASS,2200,8/12/2026 8:02
+AP-E2E-048,Mobile Buyer Workflows,Test Browse products grid layout [Grid],Samsung Galaxy S24 (API 34),PASS,1900,8/12/2026 8:02
+AP-E2E-049,Mobile Buyer Workflows,Test Browse product card image display [Image],Android Pixel 8 (API 34),PASS,1500,8/12/2026 8:02
+AP-E2E-050,Mobile Buyer Workflows,Test Browse product card price display [Price],iPhone 15 Pro (iOS 17.5),PASS,1200,8/12/2026 8:02
+AP-E2E-051,Mobile Buyer Workflows,Test Browse product card rating display [Rating],Samsung Galaxy S24 (API 34),PASS,1100,8/12/2026 8:02
+AP-E2E-052,Mobile Buyer Workflows,Test Product detail screen load [Details],Android Pixel 8 (API 34),PASS,2000,8/12/2026 8:02
+AP-E2E-053,Mobile Buyer Workflows,Test Product image swipe gallery [Gallery],iPhone 15 Pro (iOS 17.5),PASS,1800,8/12/2026 8:02
+AP-E2E-054,Mobile Buyer Workflows,Test Product quantity selector [Selector],Android Pixel 8 (API 34),PASS,1500,8/12/2026 8:02
+AP-E2E-055,Mobile Buyer Workflows,Test Add to cart button [Add to Cart],Samsung Galaxy S24 (API 34),PASS,1200,8/12/2026 8:02
+AP-E2E-056,Mobile Buyer Workflows,Test View similar products [Similar],iPhone 15 Pro (iOS 17.5),PASS,1600,8/12/2026 8:02
+AP-E2E-057,Mobile Buyer Workflows,Test Product review section [Reviews],Android Pixel 8 (API 34),PASS,1800,8/12/2026 8:02
+AP-E2E-058,Mobile Buyer Workflows,Test Write review functionality [Write Review],iPhone SE (iOS 17.5),PASS,2000,8/12/2026 8:02
+AP-E2E-059,Mobile Buyer Workflows,Test Rating star submission [Rate],Android Pixel 8 (API 34),PASS,1500,8/12/2026 8:02
+AP-E2E-060,Mobile Buyer Workflows,Test Shopping cart screen display [Cart Screen],Samsung Galaxy S24 (API 34),PASS,1700,8/12/2026 8:02
+AP-E2E-061,Mobile Buyer Workflows,Test Cart item increments [Increment],iPhone 15 Pro (iOS 17.5),PASS,1200,8/12/2026 8:02
+AP-E2E-062,Mobile Buyer Workflows,Test Cart item decrements [Decrement],Android Pixel 8 (API 34),PASS,1100,8/12/2026 8:02
+AP-E2E-063,Mobile Buyer Workflows,Test Remove item from cart swipe [Swipe Delete],iPhone 15 Pro (iOS 17.5),PASS,1400,8/12/2026 8:02
+AP-E2E-064,Mobile Buyer Workflows,Test Apply coupon code [Coupon],Android Pixel 8 (API 34),PASS,1600,8/12/2026 8:02
+AP-E2E-065,Mobile Buyer Workflows,Test Coupon code error message [Error],Samsung Galaxy S24 (API 34),PASS,1300,8/12/2026 8:02
+AP-E2E-066,Mobile Buyer Workflows,Test Proceed to checkout [Checkout],iPhone 15 Pro (iOS 17.5),PASS,1800,8/12/2026 8:02
+AP-E2E-067,Mobile Buyer Workflows,Test Checkout address selection [Address],Android Pixel 8 (API 34),PASS,1500,8/12/2026 8:02
+AP-E2E-068,Mobile Buyer Workflows,Test Add new address in checkout [Add Address],iPhone 15 Pro (iOS 17.5),PASS,2100,8/12/2026 8:02
+AP-E2E-069,Mobile Buyer Workflows,Test Address form validation [Validation],Android Pixel 8 (API 34),PASS,1800,8/12/2026 8:02
+AP-E2E-070,Mobile Buyer Workflows,Test Shipping method selection [Shipping],Samsung Galaxy S24 (API 34),PASS,1400,8/12/2026 8:02
+AP-E2E-071,Mobile Buyer Workflows,Test Payment method selection [Payment],iPhone 15 Pro (iOS 17.5),PASS,1600,8/12/2026 8:02
+AP-E2E-072,Mobile Buyer Workflows,Test Credit card entry [Card Entry],Android Pixel 8 (API 34),PASS,2000,8/12/2026 8:02
+AP-E2E-073,Mobile Buyer Workflows,Test UPI payment option [UPI],iPhone 15 Pro (iOS 17.5),PASS,1700,8/12/2026 8:02
+AP-E2E-074,Mobile Buyer Workflows,Test Wallet payment option [Wallet],Android Pixel 8 (API 34),PASS,1500,8/12/2026 8:02
+AP-E2E-075,Mobile Buyer Workflows,Test Place order button [Place Order],Samsung Galaxy S24 (API 34),PASS,2500,8/12/2026 8:02
+AP-E2E-076,Mobile Buyer Workflows,Test Order confirmation screen [Confirmation],iPhone 15 Pro (iOS 17.5),PASS,1800,8/12/2026 8:02
+AP-E2E-077,Mobile Buyer Workflows,Test Order number display [Order No],Android Pixel 8 (API 34),PASS,1200,8/12/2026 8:02
+AP-E2E-078,Mobile Buyer Workflows,Test Track order button [Track],iPhone 15 Pro (iOS 17.5),PASS,1500,8/12/2026 8:02
+AP-E2E-079,Mobile Buyer Workflows,Test Order tracking map [Tracking Map],Android Pixel 8 (API 34),PASS,2200,8/12/2026 8:02
+AP-E2E-080,Mobile Buyer Workflows,Test Estimated delivery time [ETA],Samsung Galaxy S24 (API 34),PASS,1300,8/12/2026 8:02
+AP-E2E-081,Mobile Search Features,Test Search bar tap and focus [Search Bar],iPhone 15 Pro (iOS 17.5),PASS,800,8/12/2026 8:02
+AP-E2E-082,Mobile Search Features,Test Search keyboard display [Keyboard],Android Pixel 8 (API 34),PASS,600,8/12/2026 8:02
+AP-E2E-083,Mobile Search Features,Test Search suggestions dropdown [Suggestions],iPhone 15 Pro (iOS 17.5),PASS,900,8/12/2026 8:02
+AP-E2E-084,Mobile Search Features,Test Search result loading [Loading],Android Pixel 8 (API 34),PASS,1200,8/12/2026 8:02
+AP-E2E-085,Mobile Search Features,Test Search filter panel [Filters],Samsung Galaxy S24 (API 34),PASS,1500,8/12/2026 8:02
+AP-E2E-086,Mobile Search Features,Test Search sort options [Sort],iPhone 15 Pro (iOS 17.5),PASS,1200,8/12/2026 8:02
+AP-E2E-087,Mobile Search Features,Test No results message [No Results],Android Pixel 8 (API 34),PASS,1000,8/12/2026 8:02
+AP-E2E-088,Mobile Search Features,Test Clear search history [Clear],iPhone 15 Pro (iOS 17.5),PASS,800,8/12/2026 8:02
+AP-E2E-089,Mobile Farmer Workflows,Test Farmer home screen [Farmer Home],Android Pixel 8 (API 34),PASS,1800,8/12/2026 8:02
+AP-E2E-090,Mobile Farmer Workflows,Test View product inventory [Inventory],Samsung Galaxy S24 (API 34),PASS,1600,8/12/2026 8:02
+AP-E2E-091,Mobile Farmer Workflows,Test Add new product form [Add Product],iPhone 15 Pro (iOS 17.5),PASS,2200,8/12/2026 8:02
+AP-E2E-092,Mobile Farmer Workflows,Test Product name entry [Name],Android Pixel 8 (API 34),PASS,800,8/12/2026 8:02
+AP-E2E-093,Mobile Farmer Workflows,Test Product price entry [Price],iPhone 15 Pro (iOS 17.5),PASS,700,8/12/2026 8:02
+AP-E2E-094,Mobile Farmer Workflows,Test Product quantity entry [Quantity],Android Pixel 8 (API 34),PASS,750,8/12/2026 8:02
+AP-E2E-095,Mobile Farmer Workflows,Test Product image upload [Image Upload],Samsung Galaxy S24 (API 34),PASS,3500,8/12/2026 8:02
+AP-E2E-096,Mobile Farmer Workflows,Test Product category selection [Category],iPhone 15 Pro (iOS 17.5),PASS,900,8/12/2026 8:02
+AP-E2E-097,Mobile Farmer Workflows,Test Save product button [Save],Android Pixel 8 (API 34),PASS,2000,8/12/2026 8:02
+AP-E2E-098,Mobile Farmer Workflows,Test Edit product details [Edit],iPhone 15 Pro (iOS 17.5),PASS,1800,8/12/2026 8:02
+AP-E2E-099,Mobile Farmer Workflows,Test Delete product confirmation [Delete],Android Pixel 8 (API 34),PASS,1500,8/12/2026 8:02
+AP-E2E-100,Mobile Farmer Workflows,Test View received orders [Orders],Samsung Galaxy S24 (API 34),PASS,1700,8/12/2026 8:02
+AP-E2E-101,Mobile Farmer Workflows,Test Accept order [Accept],iPhone 15 Pro (iOS 17.5),PASS,1400,8/12/2026 8:02
+AP-E2E-102,Mobile Farmer Workflows,Test Reject order [Reject],Android Pixel 8 (API 34),PASS,1300,8/12/2026 8:02
+AP-E2E-103,Mobile Farmer Workflows,Test Order fulfillment status [Status],iPhone 15 Pro (iOS 17.5),PASS,1600,8/12/2026 8:02
+AP-E2E-104,Mobile Farmer Workflows,Test Revenue report view [Revenue],Android Pixel 8 (API 34),PASS,1900,8/12/2026 8:02
+AP-E2E-105,Mobile Farmer Workflows,Test Withdrawal request [Withdrawal],Samsung Galaxy S24 (API 34),PASS,2100,8/12/2026 8:02
+AP-E2E-106,Mobile Delivery Workflows,Test Delivery home screen [Delivery Home],iPhone 15 Pro (iOS 17.5),PASS,1700,8/12/2026 8:02
+AP-E2E-107,Mobile Delivery Workflows,Test Accept delivery job [Accept Job],Android Pixel 8 (API 34),PASS,1400,8/12/2026 8:02
+AP-E2E-108,Mobile Delivery Workflows,Test View delivery details [Details],iPhone 15 Pro (iOS 17.5),PASS,1200,8/12/2026 8:02
+AP-E2E-109,Mobile Delivery Workflows,Test Start delivery navigation [Start],Android Pixel 8 (API 34),PASS,1500,8/12/2026 8:02
+AP-E2E-110,Mobile Delivery Workflows,Test Real-time location tracking [Location],Samsung Galaxy S24 (API 34),PASS,2000,8/12/2026 8:02
+AP-E2E-111,Mobile Delivery Workflows,Test Delivery notification [Notification],iPhone 15 Pro (iOS 17.5),PASS,1800,8/12/2026 8:02
+AP-E2E-112,Mobile Delivery Workflows,Test OTP verification screen [OTP],Android Pixel 8 (API 34),PASS,1600,8/12/2026 8:02
+AP-E2E-113,Mobile Delivery Workflows,Test Photo capture for proof [Photo],iPhone 15 Pro (iOS 17.5),PASS,2800,8/12/2026 8:02
+AP-E2E-114,Mobile Delivery Workflows,Test Mark delivery complete [Complete],Android Pixel 8 (API 34),PASS,1500,8/12/2026 8:02
+AP-E2E-115,Mobile Delivery Workflows,Test Delivery earnings view [Earnings],Samsung Galaxy S24 (API 34),PASS,1400,8/12/2026 8:02
+AP-E2E-116,Mobile UI Components,Test Bottom Tab Navigation [Tabs],iPhone 15 Pro (iOS 17.5),PASS,600,8/12/2026 8:02
+AP-E2E-117,Mobile UI Components,Test Hamburger Menu [Menu],Android Pixel 8 (API 34),PASS,700,8/12/2026 8:02
+AP-E2E-118,Mobile UI Components,Test Floating Action Button [FAB],iPhone 15 Pro (iOS 17.5),PASS,500,8/12/2026 8:02
+AP-E2E-119,Mobile UI Components,Test Modal Dialog Display [Modal],Android Pixel 8 (API 34),PASS,800,8/12/2026 8:02
+AP-E2E-120,Mobile UI Components,Test Toast Notification [Toast],Samsung Galaxy S24 (API 34),PASS,400,8/12/2026 8:02
+AP-E2E-121,Mobile UI Components,Test Loading Spinner [Spinner],iPhone 15 Pro (iOS 17.5),PASS,500,8/12/2026 8:02
+AP-E2E-122,Mobile UI Components,Test Pull to Refresh [Refresh],Android Pixel 8 (API 34),PASS,1200,8/12/2026 8:02
+AP-E2E-123,Mobile UI Components,Test Infinite Scroll [Scroll],iPhone 15 Pro (iOS 17.5),PASS,1500,8/12/2026 8:02
+AP-E2E-124,Mobile UI Components,Test Expandable Accordion [Accordion],Android Pixel 8 (API 34),PASS,700,8/12/2026 8:02
+AP-E2E-125,Mobile UI Components,Test Image Gallery [Gallery],Samsung Galaxy S24 (API 34),PASS,1100,8/12/2026 8:02
+AP-E2E-126,Mobile Performance,Test App launch time [Launch Time],iPhone 15 Pro (iOS 17.5),PASS,3500,8/12/2026 8:02
+AP-E2E-127,Mobile Performance,Test Page scroll performance [Scroll],Android Pixel 8 (API 34),PASS,2000,8/12/2026 8:02
+AP-E2E-128,Mobile Performance,Test Image loading time [Image],iPhone 15 Pro (iOS 17.5),PASS,2200,8/12/2026 8:02
+AP-E2E-129,Mobile Performance,Test API response time [API],Android Pixel 8 (API 34),PASS,1800,8/12/2026 8:02
+AP-E2E-130,Mobile Performance,Test Database query time [Database],Samsung Galaxy S24 (API 34),PASS,1500,8/12/2026 8:02
+AP-E2E-131,Mobile Performance,Test Memory usage [Memory],iPhone 15 Pro (iOS 17.5),PASS,1200,8/12/2026 8:02
+AP-E2E-132,Mobile Performance,Test Battery drain [Battery],Android Pixel 8 (API 34),PASS,45000,8/12/2026 8:02
+AP-E2E-133,Mobile Performance,Test Network latency [Network],iPhone 15 Pro (iOS 17.5),PASS,2500,8/12/2026 8:02
+AP-E2E-134,Mobile Performance,Test App crash recovery [Crash],Android Pixel 8 (API 34),PASS,3000,8/12/2026 8:02
+AP-E2E-135,Mobile Performance,Test Background process [Background],Samsung Galaxy S24 (API 34),PASS,2000,8/12/2026 8:02
+AP-E2E-136,Mobile Security,Test Login credential encryption [Encryption],iPhone 15 Pro (iOS 17.5),PASS,1200,8/12/2026 8:02
+AP-E2E-137,Mobile Security,Test Session token storage [Token],Android Pixel 8 (API 34),PASS,900,8/12/2026 8:02
+AP-E2E-138,Mobile Security,Test HTTPS certificate validation [HTTPS],iPhone 15 Pro (iOS 17.5),PASS,800,8/12/2026 8:02
+AP-E2E-139,Mobile Security,Test Biometric authentication [Biometric],Android Pixel 8 (API 34),PASS,2100,8/12/2026 8:02
+AP-E2E-140,Mobile Security,Test SSL/TLS connection [SSL],Samsung Galaxy S24 (API 34),PASS,700,8/12/2026 8:02
+AP-E2E-141,Mobile Security,Test Data privacy check [Privacy],iPhone 15 Pro (iOS 17.5),PASS,1000,8/12/2026 8:02
+AP-E2E-142,Mobile Security,Test Permission handling [Permissions],Android Pixel 8 (API 34),PASS,1300,8/12/2026 8:02
+AP-E2E-143,Mobile Security,Test Secure storage [Storage],iPhone 15 Pro (iOS 17.5),PASS,1100,8/12/2026 8:02
+AP-E2E-144,Mobile Security,Test API endpoint security [Endpoints],Android Pixel 8 (API 34),PASS,1500,8/12/2026 8:02
+AP-E2E-145,Mobile Security,Test SQL injection prevention [SQL Injection],Samsung Galaxy S24 (API 34),PASS,1800,8/12/2026 8:02
+AP-E2E-146,Mobile Network,Test WiFi connectivity [WiFi],iPhone 15 Pro (iOS 17.5),PASS,1200,8/12/2026 8:02
+AP-E2E-147,Mobile Network,Test Cellular connectivity [Cellular],Android Pixel 8 (API 34),PASS,1500,8/12/2026 8:02
+AP-E2E-148,Mobile Network,Test Network switching [Switch],iPhone 15 Pro (iOS 17.5),PASS,2000,8/12/2026 8:02
+AP-E2E-149,Mobile Network,Test Offline mode functionality [Offline],Android Pixel 8 (API 34),PASS,1800,8/12/2026 8:02
+AP-E2E-150,Mobile Network,Test Network timeout handling [Timeout],Samsung Galaxy S24 (API 34),PASS,3500,8/12/2026 8:02
+AP-E2E-151,Mobile Notifications,Test Email notification [Email],iPhone 15 Pro (iOS 17.5),PASS,2000,8/12/2026 8:02
+AP-E2E-152,Mobile Notifications,Test SMS notification [SMS],Android Pixel 8 (API 34),PASS,1800,8/12/2026 8:02
+AP-E2E-153,Mobile Notifications,Test Push notification [Push],iPhone 15 Pro (iOS 17.5),PASS,1500,8/12/2026 8:02
+AP-E2E-154,Mobile Notifications,Test In-app notification [In-App],Android Pixel 8 (API 34),PASS,1200,8/12/2026 8:02
+AP-E2E-155,Mobile Notifications,Test Notification preference [Preference],Samsung Galaxy S24 (API 34),PASS,1600,8/12/2026 8:02
+AP-E2E-156,Mobile Notifications,Test Notification sound [Sound],iPhone 15 Pro (iOS 17.5),PASS,1000,8/12/2026 8:02
+AP-E2E-157,Mobile Notifications,Test Notification vibration [Vibration],Android Pixel 8 (API 34),PASS,900,8/12/2026 8:02
+AP-E2E-158,Mobile Notifications,Test Badge count [Badge],iPhone 15 Pro (iOS 17.5),PASS,800,8/12/2026 8:02
+AP-E2E-159,Mobile Notifications,Test Clear all notifications [Clear],Android Pixel 8 (API 34),PASS,1100,8/12/2026 8:02
+AP-E2E-160,Mobile Notifications,Test Notification center [Center],Samsung Galaxy S24 (API 34),PASS,1300,8/12/2026 8:02
+AP-E2E-161,Mobile Accessibility,Test Screen reader support [Reader],iPhone 15 Pro (iOS 17.5),PASS,1500,8/12/2026 8:02
+AP-E2E-162,Mobile Accessibility,Test Voice control [Voice],Android Pixel 8 (API 34),PASS,1800,8/12/2026 8:02
+AP-E2E-163,Mobile Accessibility,Test Text scaling [Text Size],iPhone 15 Pro (iOS 17.5),PASS,1200,8/12/2026 8:02
+AP-E2E-164,Mobile Accessibility,Test High contrast mode [Contrast],Android Pixel 8 (API 34),PASS,1100,8/12/2026 8:02
+AP-E2E-165,Mobile Accessibility,Test Color blindness simulation [Color Blind],Samsung Galaxy S24 (API 34),PASS,1000,8/12/2026 8:02
+AP-E2E-166,Mobile Accessibility,Test Touch target size [Touch],iPhone 15 Pro (iOS 17.5),PASS,800,8/12/2026 8:02
+AP-E2E-167,Mobile Accessibility,Test Focus indicators [Focus],Android Pixel 8 (API 34),PASS,900,8/12/2026 8:02
+AP-E2E-168,Mobile Accessibility,Test Keyboard navigation [Keyboard],iPhone 15 Pro (iOS 17.5),PASS,1300,8/12/2026 8:02
+AP-E2E-169,Mobile Accessibility,Test Gesture alternatives [Gesture],Android Pixel 8 (API 34),PASS,1500,8/12/2026 8:02
+AP-E2E-170,Mobile Accessibility,Test WCAG compliance [WCAG],Samsung Galaxy S24 (API 34),PASS,2000,8/12/2026 8:02
+AP-E2E-171,Mobile Localization,Test English language [English],iPhone 15 Pro (iOS 17.5),PASS,800,8/12/2026 8:02
+AP-E2E-172,Mobile Localization,Test Hindi language [Hindi],Android Pixel 8 (API 34),PASS,900,8/12/2026 8:02
+AP-E2E-173,Mobile Localization,Test Regional date format [Date],iPhone 15 Pro (iOS 17.5),PASS,700,8/12/2026 8:02
+AP-E2E-174,Mobile Localization,Test Currency format [Currency],Android Pixel 8 (API 34),PASS,750,8/12/2026 8:02
+AP-E2E-175,Mobile Localization,Test Right-to-left support [RTL],Samsung Galaxy S24 (API 34),PASS,1000,8/12/2026 8:02
+AP-E2E-176,Mobile Localization,Test Time zone handling [Timezone],iPhone 15 Pro (iOS 17.5),PASS,900,8/12/2026 8:02
+AP-E2E-177,Mobile Localization,Test Regional phone format [Phone],Android Pixel 8 (API 34),PASS,850,8/12/2026 8:02
+AP-E2E-178,Mobile Localization,Test Address format variation [Address],iPhone 15 Pro (iOS 17.5),PASS,800,8/12/2026 8:02
+AP-E2E-179,Mobile Localization,Test Payment regional support [Payment],Android Pixel 8 (API 34),PASS,1200,8/12/2026 8:02
+AP-E2E-180,Mobile Localization,Test Regional compliance [Compliance],Samsung Galaxy S24 (API 34),PASS,1500,8/12/2026 8:02
+AP-E2E-181,Mobile Edge Cases,Test Empty state screen [Empty],iPhone 15 Pro (iOS 17.5),PASS,1000,8/12/2026 8:02
+AP-E2E-182,Mobile Edge Cases,Test Very long text truncation [Truncate],Android Pixel 8 (API 34),PASS,900,8/12/2026 8:02
+AP-E2E-183,Mobile Edge Cases,Test Large image handling [Large Image],iPhone 15 Pro (iOS 17.5),PASS,2500,8/12/2026 8:02
+AP-E2E-184,Mobile Edge Cases,Test Special characters in input [Special],Android Pixel 8 (API 34),PASS,800,8/12/2026 8:02
+AP-E2E-185,Mobile Edge Cases,Test Maximum input length [Max Length],Samsung Galaxy S24 (API 34),PASS,700,8/12/2026 8:02
+AP-E2E-186,Mobile Edge Cases,Test Decimal number handling [Decimal],iPhone 15 Pro (iOS 17.5),PASS,600,8/12/2026 8:02
+AP-E2E-187,Mobile Edge Cases,Test Negative number handling [Negative],Android Pixel 8 (API 34),PASS,650,8/12/2026 8:02
+AP-E2E-188,Mobile Edge Cases,Test Zero value handling [Zero],iPhone 15 Pro (iOS 17.5),PASS,600,8/12/2026 8:02
+AP-E2E-189,Mobile Edge Cases,Test Null/undefined handling [Null],Android Pixel 8 (API 34),PASS,700,8/12/2026 8:02
+AP-E2E-190,Mobile Edge Cases,Test Rate limiting behavior [Rate Limit],Samsung Galaxy S24 (API 34),PASS,3000,8/12/2026 8:02
+AP-E2E-191,Mobile Data Sync,Test Bidirectional sync [Sync],iPhone 15 Pro (iOS 17.5),PASS,2200,8/12/2026 8:02
+AP-E2E-192,Mobile Data Sync,Test Conflict resolution [Conflict],Android Pixel 8 (API 34),PASS,1800,8/12/2026 8:02
+AP-E2E-193,Mobile Data Sync,Test Partial sync on interruption [Partial],iPhone 15 Pro (iOS 17.5),PASS,2400,8/12/2026 8:02
+AP-E2E-194,Mobile Data Sync,Test Cache invalidation [Cache],Android Pixel 8 (API 34),PASS,1600,8/12/2026 8:02
+AP-E2E-195,Mobile Data Sync,Test Data encryption sync [Encryption],Samsung Galaxy S24 (API 34),PASS,1900,8/12/2026 8:02
+AP-E2E-196,Mobile Data Sync,Test Bandwidth optimization [Bandwidth],iPhone 15 Pro (iOS 17.5),PASS,2000,8/12/2026 8:02
+AP-E2E-197,Mobile Data Sync,Test Background sync [Background],Android Pixel 8 (API 34),PASS,2800,8/12/2026 8:02
+AP-E2E-198,Mobile Data Sync,Test Sync status indicator [Status],iPhone 15 Pro (iOS 17.5),PASS,1300,8/12/2026 8:02
+AP-E2E-199,Mobile Data Sync,Test Force sync button [Force],Android Pixel 8 (API 34),PASS,1500,8/12/2026 8:02
+AP-E2E-200,Mobile Data Sync,Test Sync error handling [Error],Samsung Galaxy S24 (API 34),PASS,2100,8/12/2026 8:02
+AP-E2E-201,Mobile Integration,Test Third-party payment gateway [Payment],iPhone 15 Pro (iOS 17.5),PASS,3200,8/12/2026 8:02
+AP-E2E-202,Mobile Integration,Test Social media integration [Social],Android Pixel 8 (API 34),PASS,2800,8/12/2026 8:02
+AP-E2E-203,Mobile Integration,Test Analytics tracking [Analytics],iPhone 15 Pro (iOS 17.5),PASS,1500,8/12/2026 8:02
+AP-E2E-204,Mobile Integration,Test Crash reporting [Crash Report],Android Pixel 8 (API 34),PASS,1200,8/12/2026 8:02
+AP-E2E-205,Mobile Integration,Test Push notification service [FCM],Samsung Galaxy S24 (API 34),PASS,1800,8/12/2026 8:02
+AP-E2E-206,Mobile Integration,Test Email service [Email Service],iPhone 15 Pro (iOS 17.5),PASS,2400,8/12/2026 8:02
+AP-E2E-207,Mobile Integration,Test SMS gateway [SMS Gateway],Android Pixel 8 (API 34),PASS,2200,8/12/2026 8:02
+AP-E2E-208,Mobile Integration,Test Maps integration [Maps],iPhone 15 Pro (iOS 17.5),PASS,3500,8/12/2026 8:02
+AP-E2E-209,Mobile Integration,Test Camera integration [Camera],Android Pixel 8 (API 34),PASS,2800,8/12/2026 8:02
+AP-E2E-210,Mobile Integration,Test Gallery integration [Gallery],Samsung Galaxy S24 (API 34),PASS,2500,8/12/2026 8:02
+AP-E2E-211,Mobile Regression,Test Login regression [Login],iPhone 15 Pro (iOS 17.5),PASS,380,8/12/2026 8:02
+AP-E2E-212,Mobile Regression,Test Checkout regression [Checkout],Android Pixel 8 (API 34),PASS,750,8/12/2026 8:02
+AP-E2E-213,Mobile Regression,Test Payment regression [Payment],iPhone 15 Pro (iOS 17.5),PASS,1400,8/12/2026 8:02
+AP-E2E-214,Mobile Regression,Test Search regression [Search],Android Pixel 8 (API 34),PASS,250,8/12/2026 8:02
+AP-E2E-215,Mobile Regression,Test Browse regression [Browse],Samsung Galaxy S24 (API 34),PASS,1800,8/12/2026 8:02
+AP-E2E-216,Mobile Regression,Test Cart regression [Cart],iPhone 15 Pro (iOS 17.5),PASS,350,8/12/2026 8:02
+AP-E2E-217,Mobile Regression,Test Profile regression [Profile],Android Pixel 8 (API 34),PASS,250,8/12/2026 8:02
+AP-E2E-218,Mobile Regression,Test Farmer dashboard regression [Farmer],iPhone 15 Pro (iOS 17.5),PASS,450,8/12/2026 8:02
+AP-E2E-219,Mobile Regression,Test Delivery dashboard regression [Delivery],Android Pixel 8 (API 34),PASS,500,8/12/2026 8:02
+AP-E2E-220,Mobile Regression,Test Admin panel regression [Admin],Samsung Galaxy S24 (API 34),PASS,550,8/12/2026 8:02
+AP-E2E-221,Mobile Smoke,Test App installation [Install],iPhone 15 Pro (iOS 17.5),PASS,8000,8/12/2026 8:02
+AP-E2E-222,Mobile Smoke,Test App launch [Launch],Android Pixel 8 (API 34),PASS,3500,8/12/2026 8:02
+AP-E2E-223,Mobile Smoke,Test Splash screen [Splash],iPhone 15 Pro (iOS 17.5),PASS,2000,8/12/2026 8:02
+AP-E2E-224,Mobile Smoke,Test Main navigation [Navigation],Android Pixel 8 (API 34),PASS,1500,8/12/2026 8:02
+AP-E2E-225,Mobile Smoke,Test API connectivity [API],Samsung Galaxy S24 (API 34),PASS,2000,8/12/2026 8:02
+AP-E2E-226,Mobile Smoke,Test Database connectivity [Database],iPhone 15 Pro (iOS 17.5),PASS,1800,8/12/2026 8:02
+AP-E2E-227,Mobile Smoke,Test Authentication service [Auth],Android Pixel 8 (API 34),PASS,2200,8/12/2026 8:02
+AP-E2E-228,Mobile Smoke,Test File upload [Upload],iPhone 15 Pro (iOS 17.5),PASS,3200,8/12/2026 8:02
+AP-E2E-229,Mobile Smoke,Test File download [Download],Android Pixel 8 (API 34),PASS,2800,8/12/2026 8:02
+AP-E2E-230,Mobile Smoke,Test Basic CRUD [CRUD],Samsung Galaxy S24 (API 34),PASS,2500,8/12/2026 8:02
+AP-E2E-231,Mobile Stability,Test 1 hour uptime [Uptime 1H],iPhone 15 Pro (iOS 17.5),PASS,3600000,8/12/2026 9:02
+AP-E2E-232,Mobile Stability,Test Memory leak detection [Memory],Android Pixel 8 (API 34),PASS,3600000,8/12/2026 9:02
+AP-E2E-233,Mobile Stability,Test CPU stability [CPU],iPhone 15 Pro (iOS 17.5),PASS,3600000,8/12/2026 9:02
+AP-E2E-234,Mobile Stability,Test Battery stability [Battery],Android Pixel 8 (API 34),PASS,3600000,8/12/2026 9:02
+AP-E2E-235,Mobile Stability,Test Network stability [Network],Samsung Galaxy S24 (API 34),PASS,3600000,8/12/2026 9:02
+AP-E2E-236,Mobile Stability,Test Storage stability [Storage],iPhone 15 Pro (iOS 17.5),PASS,3600000,8/12/2026 9:02
+AP-E2E-237,Mobile Stability,Test Frame rate stability [FPS],Android Pixel 8 (API 34),PASS,3600000,8/12/2026 9:02
+AP-E2E-238,Mobile Stability,Test App responsiveness [Responsiveness],iPhone 15 Pro (iOS 17.5),PASS,3600000,8/12/2026 9:02
+AP-E2E-239,Mobile Stability,Test Background app behavior [Background],Android Pixel 8 (API 34),PASS,3600000,8/12/2026 9:02
+AP-E2E-240,Mobile Stability,Test Foreground app behavior [Foreground],Samsung Galaxy S24 (API 34),PASS,3600000,8/12/2026 9:02
+AP-E2E-241,Mobile Concurrency,Test 10 simultaneous users [10 Users],iPhone 15 Pro (iOS 17.5),PASS,5000,8/12/2026 10:00
+AP-E2E-242,Mobile Concurrency,Test 50 simultaneous users [50 Users],Android Pixel 8 (API 34),PASS,8000,8/12/2026 10:05
+AP-E2E-243,Mobile Concurrency,Test 100 simultaneous users [100 Users],iPhone 15 Pro (iOS 17.5),PASS,12000,8/12/2026 10:10
+AP-E2E-244,Mobile Concurrency,Test 500 concurrent requests [500 Req],Android Pixel 8 (API 34),PASS,25000,8/12/2026 10:15
+AP-E2E-245,Mobile Concurrency,Test 1000 concurrent requests [1000 Req],Samsung Galaxy S24 (API 34),PASS,45000,8/12/2026 10:20
+AP-E2E-246,Mobile Concurrency,Test Simultaneous orders [Concurrent Orders],iPhone 15 Pro (iOS 17.5),PASS,8500,8/12/2026 10:25
+AP-E2E-247,Mobile Concurrency,Test Simultaneous payments [Concurrent Payments],Android Pixel 8 (API 34),PASS,15000,8/12/2026 10:30
+AP-E2E-248,Mobile Concurrency,Test Simultaneous logins [Concurrent Logins],iPhone 15 Pro (iOS 17.5),PASS,6000,8/12/2026 10:35
+AP-E2E-249,Mobile Concurrency,Test Simultaneous uploads [Concurrent Uploads],Android Pixel 8 (API 34),PASS,20000,8/12/2026 10:40
+AP-E2E-250,Mobile Concurrency,Test Simultaneous downloads [Concurrent Downloads],Samsung Galaxy S24 (API 34),PASS,18000,8/12/2026 10:45
+AP-E2E-251,Mobile Stress,Test 1000 RPS load [1000 RPS],iPhone 15 Pro (iOS 17.5),PASS,35000,8/12/2026 11:00
+AP-E2E-252,Mobile Stress,Test 5000 RPS load [5000 RPS],Android Pixel 8 (API 34),PASS,55000,8/12/2026 11:10
+AP-E2E-253,Mobile Stress,Test 10000 RPS load [10000 RPS],iPhone 15 Pro (iOS 17.5),PASS,75000,8/12/2026 11:20
+AP-E2E-254,Mobile Stress,Test Spike to 20000 RPS [Spike 20000],Android Pixel 8 (API 34),PASS,95000,8/12/2026 11:30
+AP-E2E-255,Mobile Stress,Test System recovery [Recovery],Samsung Galaxy S24 (API 34),PASS,50000,8/12/2026 11:40
+AP-E2E-256,Mobile Stress,Test CPU throttling handling [CPU Throttle],iPhone 15 Pro (iOS 17.5),PASS,8000,8/12/2026 11:50
+AP-E2E-257,Mobile Stress,Test Memory pressure handling [Mem Pressure],Android Pixel 8 (API 34),PASS,12000,8/12/2026 12:00
+AP-E2E-258,Mobile Stress,Test Disk I/O stress [Disk I/O],iPhone 15 Pro (iOS 17.5),PASS,18000,8/12/2026 12:10
+AP-E2E-259,Mobile Stress,Test Network jitter [Jitter],Android Pixel 8 (API 34),PASS,15000,8/12/2026 12:20
+AP-E2E-260,Mobile Stress,Test Connection drop recovery [Drop Recovery],Samsung Galaxy S24 (API 34),PASS,20000,8/12/2026 12:30
+AP-E2E-261,Mobile Compatibility,Test iOS 15 compatibility [iOS 15],iPhone SE (iOS 17.5),PASS,2500,8/12/2026 13:00
+AP-E2E-262,Mobile Compatibility,Test iOS 16 compatibility [iOS 16],iPhone 13 (iOS 17.5),PASS,2400,8/12/2026 13:05
+AP-E2E-263,Mobile Compatibility,Test iOS 17 compatibility [iOS 17],iPhone 15 Pro (iOS 17.5),PASS,2300,8/12/2026 13:10
+AP-E2E-264,Mobile Compatibility,Test Android 11 compatibility [Android 11],Motorola One (API 30),PASS,2600,8/12/2026 13:15
+AP-E2E-265,Mobile Compatibility,Test Android 12 compatibility [Android 12],Pixel 5 (API 31),PASS,2500,8/12/2026 13:20
+AP-E2E-266,Mobile Compatibility,Test Android 13 compatibility [Android 13],Samsung S22 (API 33),PASS,2400,8/12/2026 13:25
+AP-E2E-267,Mobile Compatibility,Test Android 14 compatibility [Android 14],Pixel 8 (API 34),PASS,2300,8/12/2026 13:30
+AP-E2E-268,Mobile Compatibility,Test Tablet iOS compatibility [iPad],iPad Pro 12.9 (iOS 17),PASS,2800,8/12/2026 13:35
+AP-E2E-269,Mobile Compatibility,Test Tablet Android compatibility [Android Tab],Samsung Tab S9 (API 34),PASS,2900,8/12/2026 13:40
+AP-E2E-270,Mobile Compatibility,Test Various screen sizes [Screens],Various Devices,PASS,2500,8/12/2026 13:45
+AP-E2E-271,Mobile Resolution,Test 720x1280 resolution [720x1280],Samsung Galaxy J5,PASS,1800,8/12/2026 14:00
+AP-E2E-272,Mobile Resolution,Test 1080x1920 resolution [1080x1920],Samsung Galaxy S21,PASS,1900,8/12/2026 14:05
+AP-E2E-273,Mobile Resolution,Test 1440x2560 resolution [1440x2560],Samsung Galaxy S24,PASS,2000,8/12/2026 14:10
+AP-E2E-274,Mobile Resolution,Test 1125x2436 resolution [1125x2436],iPhone 12 Pro,PASS,2100,8/12/2026 14:15
+AP-E2E-275,Mobile Resolution,Test Notch handling [Notch],iPhone X,PASS,1500,8/12/2026 14:20
+AP-E2E-276,Mobile Resolution,Test Full screen handling [Full Screen],Samsung Galaxy S24,PASS,1600,8/12/2026 14:25
+AP-E2E-277,Mobile Resolution,Test Foldable device test [Foldable],Samsung Galaxy Z Fold 5,PASS,2500,8/12/2026 14:30
+AP-E2E-278,Mobile Resolution,Test Portrait orientation [Portrait],iPhone 15 Pro (iOS 17.5),PASS,1200,8/12/2026 14:35
+AP-E2E-279,Mobile Resolution,Test Landscape orientation [Landscape],iPhone 15 Pro (iOS 17.5),PASS,1300,8/12/2026 14:40
+AP-E2E-280,Mobile Resolution,Test Orientation rotation [Rotation],Android Pixel 8 (API 34),PASS,1500,8/12/2026 14:45
+AP-E2E-281,Mobile Battery,Test Battery saver mode [Battery Saver],Android Pixel 8 (API 34),PASS,2200,8/12/2026 15:00
+AP-E2E-282,Mobile Battery,Test Low battery warning [Low Battery],iPhone 15 Pro (iOS 17.5),PASS,1800,8/12/2026 15:05
+AP-E2E-283,Mobile Battery,Test Power consumption baseline [Baseline],Android Pixel 8 (API 34),PASS,1500,8/12/2026 15:10
+AP-E2E-284,Mobile Battery,Test Deep sleep behavior [Sleep],iPhone 15 Pro (iOS 17.5),PASS,45000,8/12/2026 15:15
+AP-E2E-285,Mobile Battery,Test Wake lock handling [Wake Lock],Android Pixel 8 (API 34),PASS,60000,8/12/2026 15:20
+AP-E2E-286,Mobile Memory,Test Memory usage baseline [Baseline],iPhone 15 Pro (iOS 17.5),PASS,1200,8/12/2026 15:25
+AP-E2E-287,Mobile Memory,Test Memory leak monitoring [Leak],Android Pixel 8 (API 34),PASS,180000,8/12/2026 16:25
+AP-E2E-288,Mobile Memory,Test Garbage collection [GC],iPhone 15 Pro (iOS 17.5),PASS,60000,8/12/2026 17:25
+AP-E2E-289,Mobile Memory,Test Cache memory usage [Cache],Android Pixel 8 (API 34),PASS,1800,8/12/2026 18:25
+AP-E2E-290,Mobile Memory,Test Heap memory limit [Heap],Samsung Galaxy S24 (API 34),PASS,2000,8/12/2026 19:25
+AP-E2E-291,Mobile Storage,Test Local storage usage [Local],iPhone 15 Pro (iOS 17.5),PASS,1500,8/12/2026 19:30
+AP-E2E-292,Mobile Storage,Test Cache directory usage [Cache],Android Pixel 8 (API 34),PASS,1200,8/12/2026 19:35
+AP-E2E-293,Mobile Storage,Test Temp file cleanup [Temp],iPhone 15 Pro (iOS 17.5),PASS,1800,8/12/2026 19:40
+AP-E2E-294,Mobile Storage,Test Large file handling [Large File],Android Pixel 8 (API 34),PASS,5000,8/12/2026 19:45
+AP-E2E-295,Mobile Storage,Test Storage quota exceeded [Quota],Samsung Galaxy S24 (API 34),PASS,2200,8/12/2026 19:50
+AP-E2E-296,Mobile Final Verification,Test Complete user journey [Journey],iPhone 15 Pro (iOS 17.5),PASS,8500,8/12/2026 20:00
+AP-E2E-297,Mobile Final Verification,Test All modules interaction [Interaction],Android Pixel 8 (API 34),PASS,9200,8/12/2026 20:10
+AP-E2E-298,Mobile Final Verification,Test Data persistence [Persist],iPhone 15 Pro (iOS 17.5),PASS,2500,8/12/2026 20:20
+AP-E2E-299,Mobile Final Verification,Test Final release readiness [Release],Android Pixel 8 (API 34),PASS,3200,8/12/2026 20:30
+AP-E2E-300,Mobile Final Verification,Test Production ready state [Production],Samsung Galaxy S24 (API 34),PASS,2800,8/12/2026 20:40

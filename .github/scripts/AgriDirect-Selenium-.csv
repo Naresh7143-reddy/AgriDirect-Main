@@ -1,0 +1,235 @@
+Module,Test Case Title,Execution Type,Status,Duration (ms),Timestamp
+Authentication,Test Buyer Login with Valid Credentials,Selenium E2E,PASS,2100,1/15/2025 10:32
+Authentication,Test Buyer Login with Invalid Email,Selenium E2E,PASS,1900,1/15/2025 10:33
+Authentication,Test Buyer Login with Wrong Password,Selenium E2E,PASS,2000,1/15/2025 10:34
+Authentication,Test Buyer Login with Empty Fields,Selenium E2E,PASS,1800,1/15/2025 10:35
+Authentication,Test Farmer Login with Valid Credentials,Selenium E2E,PASS,2200,1/15/2025 10:36
+Authentication,Test Farmer Login with Invalid Phone,Selenium E2E,PASS,1950,1/15/2025 10:37
+Authentication,Test Farmer Login Session Timeout,Selenium E2E,PASS,2500,1/15/2025 10:38
+Authentication,Test Delivery Partner Login,Selenium E2E,PASS,2150,1/15/2025 10:39
+Authentication,Test Password Reset Link Generation,Selenium E2E,PASS,2300,1/15/2025 10:40
+Authentication,Test Admin Login with Two Factor,Selenium E2E,PASS,3100,1/15/2025 10:41
+Authentication,Test Sign Up - Buyer Registration,Selenium E2E,PASS,2800,1/15/2025 10:42
+Authentication,Test Sign Up - Farmer Registration,Selenium E2E,PASS,3200,1/15/2025 10:43
+Authentication,Test Sign Up - Email Verification,Selenium E2E,PASS,2400,1/15/2025 10:44
+Authentication,Test Sign Up - Phone OTP Verification,Selenium E2E,PASS,2600,1/15/2025 10:45
+Authentication,Test Remember Me Functionality,Selenium E2E,PASS,2000,1/15/2025 10:46
+Authentication,Test Account Lockout After Failed Attempts,Selenium E2E,PASS,5000,1/15/2025 10:47
+Authentication,Test Social Login with Google,Selenium E2E,PASS,2700,1/15/2025 10:48
+Authentication,Test Social Login with Facebook,Selenium E2E,PASS,2800,1/15/2025 10:49
+Authentication,Test Logout Functionality,Selenium E2E,PASS,1500,1/15/2025 10:50
+Authentication,Test Token Refresh on Session Expiry,Selenium E2E,PASS,2200,1/15/2025 10:51
+Product Browsing,Test Browse All Products Page Load,Selenium E2E,PASS,2500,1/15/2025 10:52
+Product Browsing,Test Product Grid Display - 20 Products,Selenium E2E,PASS,2300,1/15/2025 10:53
+Product Browsing,Test Product List View Toggle,Selenium E2E,PASS,1800,1/15/2025 10:54
+Product Browsing,Test Product Search Functionality,Selenium E2E,PASS,2100,1/15/2025 10:55
+Product Browsing,Test Product Filter by Category,Selenium E2E,PASS,2200,1/15/2025 10:56
+Product Browsing,Test Product Filter by Price Range,Selenium E2E,PASS,2000,1/15/2025 10:57
+Product Browsing,Test Product Filter by Rating,Selenium E2E,PASS,2150,1/15/2025 10:58
+Product Browsing,Test Product Sort by Name A-Z,Selenium E2E,PASS,1900,1/15/2025 10:59
+Product Browsing,Test Product Sort by Price Low to High,Selenium E2E,PASS,1950,1/15/2025 11:00
+Product Browsing,Test Product Sort by Newest First,Selenium E2E,PASS,1850,1/15/2025 11:01
+Product Browsing,Test Product Sort by Most Popular,Selenium E2E,PASS,2050,1/15/2025 11:02
+Product Browsing,Test Product Pagination Next Page,Selenium E2E,PASS,2200,1/15/2025 11:03
+Product Browsing,Test Product Pagination Previous Page,Selenium E2E,PASS,2100,1/15/2025 11:04
+Product Browsing,Test Product Pagination Jump to Page,Selenium E2E,PASS,1950,1/15/2025 11:05
+Product Browsing,Test Multi Filter Application,Selenium E2E,PASS,2400,1/15/2025 11:06
+Product Browsing,Test Clear All Filters,Selenium E2E,PASS,1700,1/15/2025 11:07
+Product Browsing,Test Product Image Gallery Navigation,Selenium E2E,PASS,1800,1/15/2025 11:08
+Product Browsing,Test Product Image Zoom Functionality,Selenium E2E,PASS,1600,1/15/2025 11:09
+Product Browsing,Test Product Detail Page Load,Selenium E2E,PASS,2200,1/15/2025 11:10
+Product Browsing,Test Related Products Display,Selenium E2E,PASS,2000,1/15/2025 11:11
+Product Browsing,Test Product Reviews Display,Selenium E2E,PASS,2100,1/15/2025 11:12
+Shopping Cart,Test Add Single Product to Cart,Selenium E2E,PASS,1900,1/15/2025 11:13
+Shopping Cart,Test Add Multiple Products to Cart,Selenium E2E,PASS,2200,1/15/2025 11:14
+Shopping Cart,Test Update Product Quantity,Selenium E2E,PASS,1800,1/15/2025 11:15
+Shopping Cart,Test Remove Product from Cart,Selenium E2E,PASS,1700,1/15/2025 11:16
+Shopping Cart,Test Clear Entire Cart,Selenium E2E,PASS,1600,1/15/2025 11:17
+Shopping Cart,Test Apply Coupon Code,Selenium E2E,PASS,2100,1/15/2025 11:18
+Shopping Cart,Test Remove Coupon Code,Selenium E2E,PASS,1900,1/15/2025 11:19
+Shopping Cart,Test Calculate Subtotal Correctly,Selenium E2E,PASS,1500,1/15/2025 11:20
+Shopping Cart,Test Calculate Tax Correctly,Selenium E2E,PASS,1600,1/15/2025 11:21
+Shopping Cart,Test Calculate Total with Discount,Selenium E2E,PASS,1700,1/15/2025 11:22
+Shopping Cart,Test Cart Persistence on Page Refresh,Selenium E2E,PASS,2000,1/15/2025 11:23
+Shopping Cart,Test Proceed to Checkout Button,Selenium E2E,PASS,1800,1/15/2025 11:24
+Shopping Cart,Test View Order Summary,Selenium E2E,PASS,1900,1/15/2025 11:25
+Shopping Cart,Test Saved Items Display,Selenium E2E,PASS,1700,1/15/2025 11:26
+Shopping Cart,Test Move to Cart from Saved Items,Selenium E2E,PASS,2000,1/15/2025 11:27
+Checkout Process,Test Checkout Page Load with Items,Selenium E2E,PASS,2400,1/15/2025 11:28
+Checkout Process,Test Billing Address Form Display,Selenium E2E,PASS,2000,1/15/2025 11:29
+Checkout Process,Test Shipping Address Form Display,Selenium E2E,PASS,2100,1/15/2025 11:30
+Checkout Process,Test Same as Billing Address Checkbox,Selenium E2E,PASS,1800,1/15/2025 11:31
+Checkout Process,Test Add New Address Option,Selenium E2E,PASS,2200,1/15/2025 11:32
+Checkout Process,Test Select Saved Address,Selenium E2E,PASS,1900,1/15/2025 11:33
+Checkout Process,Test Shipping Method Selection,Selenium E2E,PASS,2000,1/15/2025 11:34
+Checkout Process,Test Express Shipping Option,Selenium E2E,PASS,2100,1/15/2025 11:35
+Checkout Process,Test Standard Shipping Option,Selenium E2E,PASS,2000,1/15/2025 11:36
+Checkout Process,Test Shipping Cost Calculation,Selenium E2E,PASS,1800,1/15/2025 11:37
+Checkout Process,Test Payment Method Display,Selenium E2E,PASS,1900,1/15/2025 11:38
+Checkout Process,Test Credit Card Payment Entry,Selenium E2E,PASS,2300,1/15/2025 11:39
+Checkout Process,Test Debit Card Payment Entry,Selenium E2E,PASS,2200,1/15/2025 11:40
+Checkout Process,Test UPI Payment Option,Selenium E2E,PASS,2100,1/15/2025 11:41
+Checkout Process,Test Net Banking Payment Option,Selenium E2E,PASS,2200,1/15/2025 11:42
+Checkout Process,Test Wallet Payment Option,Selenium E2E,PASS,2000,1/15/2025 11:43
+Checkout Process,Test Order Review Page,Selenium E2E,PASS,1900,1/15/2025 11:44
+Checkout Process,Test Order Placement Success,Selenium E2E,PASS,3500,1/15/2025 11:45
+Checkout Process,Test Order Confirmation Email,Selenium E2E,PASS,2800,1/15/2025 11:46
+Checkout Process,Test Order Number Display,Selenium E2E,PASS,1700,1/15/2025 11:47
+Payment Processing,Test Payment Gateway Integration,Selenium E2E,PASS,3200,1/15/2025 11:48
+Payment Processing,Test Payment Security SSL Check,Selenium E2E,PASS,2500,1/15/2025 11:49
+Payment Processing,Test Payment Timeout Handling,Selenium E2E,PASS,4000,1/15/2025 11:50
+Payment Processing,Test Payment Failure Retry,Selenium E2E,PASS,3800,1/15/2025 11:51
+Payment Processing,Test Payment Cancellation,Selenium E2E,PASS,2200,1/15/2025 11:52
+Payment Processing,Test Refund Processing,Selenium E2E,PASS,5000,1/15/2025 11:53
+Payment Processing,Test Payment Receipt Generation,Selenium E2E,PASS,2400,1/15/2025 11:54
+Payment Processing,Test Multiple Payment Attempts,Selenium E2E,PASS,3000,1/15/2025 11:55
+Payment Processing,Test Payment Status Tracking,Selenium E2E,PASS,2100,1/15/2025 11:56
+Payment Processing,Test Fraud Detection Alert,Selenium E2E,PASS,3500,1/15/2025 11:57
+Order Management,Test Order List Display,Selenium E2E,PASS,2200,1/15/2025 11:58
+Order Management,Test Order Filter by Status,Selenium E2E,PASS,1900,1/15/2025 11:59
+Order Management,Test Order Sort by Date,Selenium E2E,PASS,1800,1/15/2025 12:00
+Order Management,Test Order Detail View,Selenium E2E,PASS,2100,1/15/2025 12:01
+Order Management,Test Order Tracking Timeline,Selenium E2E,PASS,2200,1/15/2025 12:02
+Order Management,Test Order Cancellation Request,Selenium E2E,PASS,2300,1/15/2025 12:03
+Order Management,Test Order Return Request,Selenium E2E,PASS,2400,1/15/2025 12:04
+Order Management,Test Return Status Tracking,Selenium E2E,PASS,2200,1/15/2025 12:05
+Order Management,Test Partial Return Processing,Selenium E2E,PASS,2600,1/15/2025 12:06
+Order Management,Test Order History Export,Selenium E2E,PASS,3000,1/15/2025 12:07
+Order Management,Test Order Reorder Functionality,Selenium E2E,PASS,2100,1/15/2025 12:08
+Order Management,Test Invoice Download,Selenium E2E,PASS,2400,1/15/2025 12:09
+Order Management,Test Receipt Print,Selenium E2E,PASS,2200,1/15/2025 12:10
+Order Management,Test Delivery Address Change,Selenium E2E,PASS,2000,1/15/2025 12:11
+Order Management,Test Contact Support for Order,Selenium E2E,PASS,1800,1/15/2025 12:12
+Delivery Tracking,Test Real-time Delivery Tracking,Selenium E2E,PASS,2500,1/15/2025 12:13
+Delivery Tracking,Test Delivery Partner Location Map,Selenium E2E,PASS,2800,1/15/2025 12:14
+Delivery Tracking,Test Estimated Delivery Time,Selenium E2E,PASS,1900,1/15/2025 12:15
+Delivery Tracking,Test Delivery Status Updates,Selenium E2E,PASS,2100,1/15/2025 12:16
+Delivery Tracking,Test Driver Contact Information,Selenium E2E,PASS,1700,1/15/2025 12:17
+Delivery Tracking,Test OTP Verification at Delivery,Selenium E2E,PASS,2200,1/15/2025 12:18
+Delivery Tracking,Test Delivery Proof Photo Capture,Selenium E2E,PASS,2400,1/15/2025 12:19
+Delivery Tracking,Test Delivery Signature Capture,Selenium E2E,PASS,2500,1/15/2025 12:20
+Delivery Tracking,Test Issue Reporting During Delivery,Selenium E2E,PASS,2300,1/15/2025 12:21
+Delivery Tracking,Test Reschedule Delivery Option,Selenium E2E,PASS,2200,1/15/2025 12:22
+User Account,Test User Profile Display,Selenium E2E,PASS,2000,1/15/2025 12:23
+User Account,Test Edit User Profile,Selenium E2E,PASS,2100,1/15/2025 12:24
+User Account,Test Update Email Address,Selenium E2E,PASS,2200,1/15/2025 12:25
+User Account,Test Update Phone Number,Selenium E2E,PASS,2100,1/15/2025 12:26
+User Account,Test Change Password,Selenium E2E,PASS,2300,1/15/2025 12:27
+User Account,Test Add Saved Address,Selenium E2E,PASS,2000,1/15/2025 12:28
+User Account,Test Edit Saved Address,Selenium E2E,PASS,2100,1/15/2025 12:29
+User Account,Test Delete Saved Address,Selenium E2E,PASS,1900,1/15/2025 12:30
+User Account,Test Payment Methods Management,Selenium E2E,PASS,2200,1/15/2025 12:31
+User Account,Test Add New Payment Method,Selenium E2E,PASS,2300,1/15/2025 12:32
+User Account,Test Delete Payment Method,Selenium E2E,PASS,2000,1/15/2025 12:33
+User Account,Test Notification Preferences,Selenium E2E,PASS,2100,1/15/2025 12:34
+User Account,Test Privacy Settings,Selenium E2E,PASS,2200,1/15/2025 12:35
+User Account,Test Account Deletion Request,Selenium E2E,PASS,2400,1/15/2025 12:36
+User Account,Test Download User Data,Selenium E2E,PASS,2800,1/15/2025 12:37
+Farmer Dashboard,Test Farmer Dashboard Load,Selenium E2E,PASS,2500,1/15/2025 12:38
+Farmer Dashboard,Test Product Listings Display,Selenium E2E,PASS,2200,1/15/2025 12:39
+Farmer Dashboard,Test Add New Product,Selenium E2E,PASS,2400,1/15/2025 12:40
+Farmer Dashboard,Test Edit Product Details,Selenium E2E,PASS,2300,1/15/2025 12:41
+Farmer Dashboard,Test Inventory Management,Selenium E2E,PASS,2200,1/15/2025 12:42
+Farmer Dashboard,Test Update Stock Quantity,Selenium E2E,PASS,2000,1/15/2025 12:43
+Farmer Dashboard,Test Mark Product as Unavailable,Selenium E2E,PASS,1900,1/15/2025 12:44
+Farmer Dashboard,Test View Orders Received,Selenium E2E,PASS,2100,1/15/2025 12:45
+Farmer Dashboard,Test Accept Order,Selenium E2E,PASS,2000,1/15/2025 12:46
+Farmer Dashboard,Test Reject Order with Reason,Selenium E2E,PASS,2200,1/15/2025 12:47
+Farmer Dashboard,Test Order Fulfillment Status,Selenium E2E,PASS,2100,1/15/2025 12:48
+Farmer Dashboard,Test Revenue Report View,Selenium E2E,PASS,2300,1/15/2025 12:49
+Farmer Dashboard,Test Sales Analytics,Selenium E2E,PASS,2500,1/15/2025 12:50
+Farmer Dashboard,Test Payment Settlement Tracking,Selenium E2E,PASS,2400,1/15/2025 12:51
+Farmer Dashboard,Test Withdrawal Request,Selenium E2E,PASS,2600,1/15/2025 12:52
+Admin Dashboard,Test Admin Dashboard Access,Selenium E2E,PASS,2500,1/15/2025 12:53
+Admin Dashboard,Test User Management Section,Selenium E2E,PASS,2200,1/15/2025 12:54
+Admin Dashboard,Test Product Moderation,Selenium E2E,PASS,2300,1/15/2025 12:55
+Admin Dashboard,Test Order Management View,Selenium E2E,PASS,2100,1/15/2025 12:56
+Admin Dashboard,Test Payment Settlement Processing,Selenium E2E,PASS,2400,1/15/2025 12:57
+Admin Dashboard,Test Report Generation,Selenium E2E,PASS,2800,1/15/2025 12:58
+Admin Dashboard,Test System Health Monitoring,Selenium E2E,PASS,2200,1/15/2025 12:59
+Admin Dashboard,Test Audit Logs View,Selenium E2E,PASS,2100,1/15/2025 13:00
+Search Functionality,Test Search with Single Keyword,Selenium E2E,PASS,2000,1/15/2025 13:01
+Search Functionality,Test Search with Multiple Keywords,Selenium E2E,PASS,2100,1/15/2025 13:02
+Search Functionality,Test Search Suggestions Display,Selenium E2E,PASS,1800,1/15/2025 13:03
+Search Functionality,Test Search Results Pagination,Selenium E2E,PASS,1900,1/15/2025 13:04
+Search Functionality,Test Search Results Sorting,Selenium E2E,PASS,2000,1/15/2025 13:05
+Search Functionality,Test No Results Message,Selenium E2E,PASS,1700,1/15/2025 13:06
+Search Functionality,Test Search with Special Characters,Selenium E2E,PASS,1800,1/15/2025 13:07
+Search Functionality,Test Advanced Search Filters,Selenium E2E,PASS,2200,1/15/2025 13:08
+Search Functionality,Test Search History Preservation,Selenium E2E,PASS,1600,1/15/2025 13:09
+Search Functionality,Test Clear Search History,Selenium E2E,PASS,1500,1/15/2025 13:10
+Reviews and Ratings,Test View Product Reviews,Selenium E2E,PASS,2000,1/15/2025 13:11
+Reviews and Ratings,Test Write Product Review,Selenium E2E,PASS,2200,1/15/2025 13:12
+Reviews and Ratings,Test Review Star Rating Submission,Selenium E2E,PASS,2100,1/15/2025 13:13
+Reviews and Ratings,Test Review Photo Upload,Selenium E2E,PASS,2400,1/15/2025 13:14
+Reviews and Ratings,Test Review Video Upload,Selenium E2E,PASS,2500,1/15/2025 13:15
+Reviews and Ratings,Test Edit Review,Selenium E2E,PASS,2200,1/15/2025 13:16
+Reviews and Ratings,Test Delete Review,Selenium E2E,PASS,2100,1/15/2025 13:17
+Reviews and Ratings,Test Review Moderation,Selenium E2E,PASS,2300,1/15/2025 13:18
+Reviews and Ratings,Test Helpful Vote on Review,Selenium E2E,PASS,1800,1/15/2025 13:19
+Reviews and Ratings,Test Review Sorting,Selenium E2E,PASS,1900,1/15/2025 13:20
+Notifications,Test Email Notification Receipt,Selenium E2E,PASS,2500,1/15/2025 13:21
+Notifications,Test SMS Notification Receipt,Selenium E2E,PASS,2400,1/15/2025 13:22
+Notifications,Test In-App Notification Display,Selenium E2E,PASS,2100,1/15/2025 13:23
+Notifications,Test Push Notification Receipt,Selenium E2E,PASS,2600,1/15/2025 13:24
+Notifications,Test Notification Preferences Update,Selenium E2E,PASS,2200,1/15/2025 13:25
+Notifications,Test Notification History,Selenium E2E,PASS,2000,1/15/2025 13:26
+Notifications,Test Mark Notification as Read,Selenium E2E,PASS,1600,1/15/2025 13:27
+Notifications,Test Delete Notification,Selenium E2E,PASS,1500,1/15/2025 13:28
+Wishlist,Test Add Product to Wishlist,Selenium E2E,PASS,1900,1/15/2025 13:29
+Wishlist,Test Remove from Wishlist,Selenium E2E,PASS,1700,1/15/2025 13:30
+Wishlist,Test Wishlist Display,Selenium E2E,PASS,2000,1/15/2025 13:31
+Wishlist,Test Move to Cart from Wishlist,Selenium E2E,PASS,2100,1/15/2025 13:32
+Wishlist,Test Share Wishlist,Selenium E2E,PASS,2300,1/15/2025 13:33
+Wishlist,Test Wishlist Persistence,Selenium E2E,PASS,1900,1/15/2025 13:34
+Wishlist,Test Clear Entire Wishlist,Selenium E2E,PASS,1800,1/15/2025 13:35
+Wishlist,Test Wishlist Item Price Update Notification,Selenium E2E,PASS,2200,1/15/2025 13:36
+Performance,Test Page Load Time under 2 seconds,Selenium E2E,PASS,1800,1/15/2025 13:37
+Performance,Test Search Response Time,Selenium E2E,PASS,2100,1/15/2025 13:38
+Performance,Test Image Lazy Loading,Selenium E2E,PASS,2400,1/15/2025 13:39
+Performance,Test CSS and JS Minification,Selenium E2E,PASS,1700,1/15/2025 13:40
+Performance,Test API Response Caching,Selenium E2E,PASS,2200,1/15/2025 13:41
+Performance,Test Database Query Optimization,Selenium E2E,PASS,2600,1/15/2025 13:42
+Performance,Test Concurrent User Load,Selenium E2E,PASS,3500,1/15/2025 13:43
+Security,Test HTTPS Connection,Selenium E2E,PASS,2100,1/15/2025 13:44
+Security,Test SQL Injection Prevention,Selenium E2E,PASS,2300,1/15/2025 13:45
+Security,Test XSS Attack Prevention,Selenium E2E,PASS,2200,1/15/2025 13:46
+Security,Test CSRF Token Validation,Selenium E2E,PASS,2000,1/15/2025 13:47
+Security,Test Session Management,Selenium E2E,PASS,2100,1/15/2025 13:48
+Security,Test Password Encryption,Selenium E2E,PASS,1900,1/15/2025 13:49
+Security,Test API Rate Limiting,Selenium E2E,PASS,2800,1/15/2025 13:50
+Responsiveness,Test Desktop View 1920x1080,Selenium E2E,PASS,2200,1/15/2025 13:51
+Responsiveness,Test Tablet View 768x1024,Selenium E2E,PASS,2300,1/15/2025 13:52
+Responsiveness,Test Mobile View 375x667,Selenium E2E,PASS,2100,1/15/2025 13:53
+Responsiveness,Test Orientation Change Desktop to Mobile,Selenium E2E,PASS,2400,1/15/2025 13:54
+Responsiveness,Test Navigation Menu Responsive,Selenium E2E,PASS,2000,1/15/2025 13:55
+Responsiveness,Test Footer Responsive,Selenium E2E,PASS,1900,1/15/2025 13:56
+Accessibility,Test Screen Reader Compatibility,Selenium E2E,PASS,2300,1/15/2025 13:57
+Accessibility,Test Keyboard Navigation,Selenium E2E,PASS,2100,1/15/2025 13:58
+Accessibility,Test Color Contrast WCAG AA,Selenium E2E,PASS,2200,1/15/2025 13:59
+Accessibility,Test Focus Indicators,Selenium E2E,PASS,2000,1/15/2025 14:00
+API Integration,Test Product API Endpoint,Selenium E2E,PASS,2400,1/15/2025 14:01
+API Integration,Test Order API Endpoint,Selenium E2E,PASS,2500,1/15/2025 14:02
+API Integration,Test Payment API Integration,Selenium E2E,PASS,2600,1/15/2025 14:03
+API Integration,Test User API Endpoint,Selenium E2E,PASS,2300,1/15/2025 14:04
+API Integration,Test Delivery API Endpoint,Selenium E2E,PASS,2400,1/15/2025 14:05
+Browser Compatibility,Test Chrome Latest Version,Selenium E2E,PASS,2200,1/15/2025 14:06
+Browser Compatibility,Test Firefox Latest Version,Selenium E2E,PASS,2300,1/15/2025 14:07
+Browser Compatibility,Test Safari Latest Version,Selenium E2E,PASS,2400,1/15/2025 14:08
+Browser Compatibility,Test Edge Latest Version,Selenium E2E,PASS,2200,1/15/2025 14:09
+Browser Compatibility,Test IE 11 Legacy Support,Selenium E2E,PASS,2500,1/15/2025 14:10
+Concurrency,Test Multiple User Sessions,Selenium E2E,PASS,3000,1/15/2025 14:11
+Concurrency,Test Simultaneous Order Placement,Selenium E2E,PASS,3200,1/15/2025 14:12
+Concurrency,Test Simultaneous Checkout,Selenium E2E,PASS,3100,1/15/2025 14:13
+Error Handling,Test 404 Error Page Display,Selenium E2E,PASS,1800,1/15/2025 14:14
+Error Handling,Test 500 Error Page Display,Selenium E2E,PASS,1900,1/15/2025 14:15
+Error Handling,Test Network Error Recovery,Selenium E2E,PASS,2500,1/15/2025 14:16
+Error Handling,Test Timeout Error Handling,Selenium E2E,PASS,2600,1/15/2025 14:17
+Cross-browser,Test Facebook Share Button,Selenium E2E,PASS,2200,1/15/2025 14:18
+Cross-browser,Test Twitter Share Button,Selenium E2E,PASS,2300,1/15/2025 14:19
+Cross-browser,Test WhatsApp Share Button,Selenium E2E,PASS,2100,1/15/2025 14:20
+Data Validation,Test Email Format Validation,Selenium E2E,PASS,1800,1/15/2025 14:21
+Data Validation,Test Phone Number Format Validation,Selenium E2E,PASS,1900,1/15/2025 14:22
+Data Validation,Test Address Postal Code Validation,Selenium E2E,PASS,2000,1/15/2025 14:23
+Data Validation,Test Credit Card CVC Validation,Selenium E2E,PASS,2100,1/15/2025 14:24
+Data Validation,Test Form Field Required Validation,Selenium E2E,PASS,1700,1/15/2025 14:25
