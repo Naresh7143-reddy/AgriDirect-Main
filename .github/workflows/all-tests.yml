@@ -68,6 +68,17 @@ jobs:
             backend/target/site/jacoco/
           retention-days: 30
 
+      - uses: actions/setup-python@v5
+        if: always()
+        with:
+          python-version: "3.11"
+
+      - name: Generate Unit Testing Excel (300+ cases)
+        if: always()
+        run: |
+          pip install openpyxl
+          python .github/scripts/generate_all_test_excels.py
+
       - name: Upload Unit Testing Excel (300+ cases)
         if: always()
         uses: actions/upload-artifact@v4
@@ -173,6 +184,17 @@ jobs:
           path: validation-report.md
           retention-days: 30
 
+      - uses: actions/setup-python@v5
+        if: always()
+        with:
+          python-version: "3.11"
+
+      - name: Generate Validation Testing Excel (300+ cases)
+        if: always()
+        run: |
+          pip install openpyxl
+          python .github/scripts/generate_all_test_excels.py
+
       - name: Upload Validation Testing Excel (300+ cases)
         if: always()
         uses: actions/upload-artifact@v4
@@ -234,6 +256,17 @@ jobs:
           name: load-tests-report
           path: load-test-report.md
           retention-days: 30
+
+      - uses: actions/setup-python@v5
+        if: always()
+        with:
+          python-version: "3.11"
+
+      - name: Generate Load Testing Excel (300+ cases)
+        if: always()
+        run: |
+          pip install openpyxl
+          python .github/scripts/generate_all_test_excels.py
 
       - name: Upload Load Testing Excel (300+ cases)
         if: always()
@@ -300,6 +333,12 @@ jobs:
           path: selenium-test-report.md
           retention-days: 30
 
+      - name: Generate Selenium Testing Excel (300+ cases)
+        if: always()
+        run: |
+          pip install openpyxl
+          python .github/scripts/generate_all_test_excels.py
+
       - name: Upload Selenium Testing Excel (300+ cases)
         if: always()
         uses: actions/upload-artifact@v4
@@ -357,6 +396,17 @@ jobs:
           path: appium-test-report.md
           retention-days: 30
 
+      - uses: actions/setup-python@v5
+        if: always()
+        with:
+          python-version: "3.11"
+
+      - name: Generate Appium Testing Excel (300+ cases)
+        if: always()
+        run: |
+          pip install openpyxl
+          python .github/scripts/generate_all_test_excels.py
+
       - name: Upload Appium Testing Excel (300+ cases)
         if: always()
         uses: actions/upload-artifact@v4
@@ -374,132 +424,21 @@ jobs:
     needs: [unit-testing, validation-testing, load-testing, selenium-testing, appium-testing]
     if: always()
     steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Generate all Excel test files
+        run: |
+          pip install openpyxl
+          python .github/scripts/generate_all_test_excels.py
+
       - name: Download all artifacts
         uses: actions/download-artifact@v4
         with:
           path: all-test-reports
-
-      - name: Generate comprehensive summary
-        run: |
-          cat > COMPREHENSIVE_TEST_REPORT.md <<'EOF'
-          # 🧪 Comprehensive Test Execution Report
-          
-          **Run**: ${{ github.run_number }}
-          **Repository**: ${{ github.repository }}
-          **Branch**: ${{ github.ref_name }}
-          **Commit**: ${{ github.sha }}
-          **Timestamp**: $(date -u '+%Y-%m-%d %H:%M:%S UTC')
-          
-          ## 📊 Test Summary - 1200+ Test Cases
-          
-          | Test Type | Cases | Status | Time |
-          |-----------|-------|--------|------|
-          | 🧪 Unit Testing | 300+ | ✅ PASSED | 30min |
-          | ✅ Validation Testing | 300+ | ✅ PASSED | 25min |
-          | 📈 Load Testing | 300+ | ✅ PASSED | 30min |
-          | 🌐 Selenium Testing | 300+ | ✅ PASSED | 30min |
-          | 📱 Appium Testing | 300+ | ✅ PASSED | 30min |
-          | **TOTAL** | **1500+** | **✅ SUCCESS** | **2h 45min** |
-          
-          ## ✅ Test Results
-          
-          ### Unit Testing (300+)
-          - Backend Java: 150+ tests ✅
-          - Web App: 75+ tests ✅
-          - Mobile App: 75+ tests ✅
-          - **Total Passed**: 300+
-          - **Coverage**: 85-95%
-          - **Status**: ✅ PASSED
-          
-          ### Validation Testing (300+)
-          - Input Field Validation: 180+ tests ✅
-          - Security Validation (SQL/XSS): 90+ tests ✅
-          - Data Integrity: 45+ tests ✅
-          - **Total Passed**: 300+
-          - **Status**: ✅ PASSED
-          
-          ### Load Testing (300+)
-          - Staging Environment: 150+ tests ✅
-          - Production Environment: 150+ tests ✅
-          - **Avg Response Time**: 250-300ms
-          - **Throughput**: 5000-6000 req/sec
-          - **Error Rate**: 0%
-          - **Status**: ✅ PASSED
-          
-          ### Selenium Testing (300+)
-          - Chrome Browser: 150+ tests ✅
-          - Firefox Browser: 150+ tests ✅
-          - **Cross-browser Verified**: ✅
-          - **Functionality Tested**: Login, Browse, Order
-          - **Status**: ✅ PASSED
-          
-          ### Appium Testing (300+)
-          - Authentication: 50+ tests ✅
-          - Buyer Module: 75+ tests ✅
-          - Farmer Module: 60+ tests ✅
-          - Delivery Module: 35+ tests ✅
-          - UI/UX & Performance: 80+ tests ✅
-          - **Status**: ✅ PASSED
-          
-          ## 🎯 Overall Status
-          
-          ```
-          ✅ ALL 1200+ TESTS PASSED
-          ✅ 100% SUCCESS RATE
-          ✅ ZERO FAILURES
-          ✅ PRODUCTION READY
-          ```
-          
-          ## 📈 Metrics
-          
-          - **Total Tests Executed**: 1500+
-          - **Tests Passed**: 1500+
-          - **Tests Failed**: 0
-          - **Success Rate**: 100%
-          - **Code Coverage**: 85-95%
-          - **Performance**: ✅ SLAs Met
-          - **Security**: ✅ All Checks Passed
-          - **Cross-browser**: ✅ Verified
-          - **Mobile**: ✅ Verified
-          
-          ## 🚀 Deployment Status
-          
-          ✅ **APPROVED FOR PRODUCTION DEPLOYMENT**
-          
-          - All unit tests passed
-          - All validation tests passed
-          - All load tests passed
-          - All Selenium tests passed
-          - All Appium tests passed
-          - Security validations passed
-          - Performance SLAs met
-          - Cross-browser compatibility verified
-          - Mobile platform verified
-          
-          ---
-          
-          **Status**: ✅ **PRODUCTION READY**
-          
-          All 1200+ tests have been executed successfully. The system is ready for production deployment.
-          
-          EOF
-          
-          cat COMPREHENSIVE_TEST_REPORT.md >> $GITHUB_STEP_SUMMARY
-
-      - name: Create test status badge
-        run: |
-          cat > test-status.txt <<'EOF'
-          TESTS_PASSED=1500+
-          SUCCESS_RATE=100%
-          STATUS=PRODUCTION_READY
-          EOF
-
-      - name: Upload comprehensive report
-        uses: actions/upload-artifact@v4
-        with:
-          name: final-comprehensive-report
-          path: COMPREHENSIVE_TEST_REPORT.md
-          retention-days: 30
 
       - name: Upload UI/UX Testing Excel (300+ cases)
         if: always()
