@@ -1,0 +1,11 @@
+{
+  "name": "agridirect-github-scripts",
+  "version": "1.0.0",
+  "description": "GitHub Actions helper scripts",
+  "scripts": {
+    "install-deps": "npm install docx"
+  },
+  "dependencies": {
+    "docx": "^8.5.0"
+  }
+}
